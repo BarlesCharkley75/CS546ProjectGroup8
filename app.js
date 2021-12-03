@@ -1,16 +1,14 @@
 const express = require('express');
 const app = express();
 const static = express.static(__dirname + '/public');
-const path = require('path');
+const configRoutes = require('./routes');
 
 app.use('/public', static);
 app.use(express.static('public'))
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
 
-app.use('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/static/landing.html'));
-  });
+configRoutes(app);
 
 app.listen(3000, () => {
     console.log("We've now got a server!");
