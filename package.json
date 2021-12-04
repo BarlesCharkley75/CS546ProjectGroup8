@@ -1,24 +1,16 @@
 {
-  "name": "cs546projectgroup8",
+  "name": "final",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "my final project module",
+  "main": "seed.js",
   "scripts": {
-    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BarlesCharkley75/CS546ProjectGroup8.git"
-  },
-  "author": "Team 8",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/BarlesCharkley75/CS546ProjectGroup8/issues"
-  },
-  "homepage": "https://github.com/BarlesCharkley75/CS546ProjectGroup8#readme",
+  "author": "Joseph Mirabile 10426348",
+  "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.6",
-    "express": "^4.17.1"
+    "axios": "^0.24.0",
+    "express": "^4.17.1",
+    "mongodb": "^4.2.1"
   }
 }
