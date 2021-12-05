@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
 const data = require('../data');
 const user = data.users;
 
@@ -17,7 +16,7 @@ router.get('/login', async (req, res) => {
   if(req.session.user){
     res.redirect('/profile');
   }else{
-    res.sendFile(path.join(__dirname.substring(0, __dirname.lastIndexOf('/')), '/static/landing.html'));
+    res.render('hotelpages/login', {title : 'Login'});
   }
 });
 
@@ -25,58 +24,74 @@ router.get('/signup', async (req, res) => {
   if(req.session.user){
       res.redirect('/profile');
   }else{
-      res.render('users/register', {});
+      res.render('hotelpages/register', {});
   }
       
 });
 
 router.post('/signup', async (req, res) => {
   let userData = req.body;
+  let username = userData.username;
+  let password = userData.password;
+  let firstName = userData.firstName;
+  let lastName = userData.lastName;
+  let email = userData.email;
+  let pfp = userData.pfp;
+  let city = userData.city;
+  let state = userData.state;
+  let age = userData.age;
+  let planToVisit = userData.planToVisit;
   try{
+    if(planToVisit.includes(",") == true){
+        planToVisit = planToVisit.split(",")
+    }else{
+        planToVisit = [planToVisit]
+    }
     username = username.toLowerCase();
-    const newUser = await user.createUser(username,password);
+    const newUser = await user.createUser(firstName, lastName, email, pfp, city, state, age, planToVisit, username, password);
     if(newUser['userInserted'] == true){
-      res.render('users/login', {});
+      res.render('hotelpages/login', {title : 'Login'});
     }else{
       res.status(500).json({error: 'Internal Server Error'});
-
     }
   }catch(e){
-    res.status(400).render('users/register', {error: e});
+    res.status(400).render('hotelpages/register', {title : 'Register', error: e});
   }
 
 });
 
 router.post('/login', async (req, res) => {
   let userData = req.body;
+  let username = userData.username;
+  let password = userData.password;
   try{
     username = username.toLowerCase();
-    const newUser = await user.checkUser(username,userData.password);
+    const newUser = await user.checkUser(username,password);
     if(newUser['authenticated'] == true){
       req.session.user = {Username: username};
-      res.redirect('/private');
+      res.redirect('/profile');
     }else{
       res.status(500).json({error: 'Internal Server Error'});
 
     }
   }catch(e){
-    res.status(400).render('users/login', {error: e});
+    res.status(400).render('hotelpages/login', {title : 'Login', error: e});
   }
      
 });
 
-router.get('/private', async (req, res) => {
+router.get('/profile', async (req, res) => {
   if(req.session.user){
-    res.render('users/private', {username: req.session.user.Username});
+    res.render('hotelpages/profile', {title : 'Profile', name : req.session.user.Username});
   }else{
-    res.render('users/login', {});
+    res.render('hotelpages/login', {title : 'Login'});
   }
     
 });
 
 router.get('/logout', async (req, res) => {
   req.session.destroy();
-  res.render('users/logout', {});
+  res.render('hotelpages/login', {title : 'Login'});
 });
 
 

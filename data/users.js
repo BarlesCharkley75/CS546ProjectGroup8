@@ -13,7 +13,7 @@ module.exports = {
         if (typeof pfp != "string") throw "Error: pfp must be a valid string"
         if (typeof city != "string") throw "Error: city must be a valid string"
         if (typeof state != "string") throw "Error: state must be a valid string"
-        if (typeof age != "number") throw "Error: age must be a valid number"
+        if (typeof age != "string") throw "Error: age must be a valid number"
         if (typeof username != "string") throw "Error: username must be a valid string"
         if (typeof password != "string") throw "Error: password must be a valid string"
         if (firstName.trim().length == 0 || lastName.trim().length == 0 || email.trim().length == 0 || pfp.trim().length == 0 || city.trim().length == 0 || state.trim().length == 0 || username.trim().length == 0 || password.trim().length == 0) throw "Error: inputs must not be only spaces"

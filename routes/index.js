@@ -1,4 +1,5 @@
 const path = require('path');
+const userRoutes = require('./users');
 
 const constructorMethod = (app) => {
     // app.use('/', (req, res) => {
@@ -11,6 +12,8 @@ const constructorMethod = (app) => {
     //   // maybe id in url?
     //   res.sendFile(path.join(__dirname.substring(0, __dirname.lastIndexOf('/')), '/static/profile.html'));
   // });
+  app.use('/', userRoutes);
+  
   app.use('/manage', (req, res) => {
     res.sendFile(path.join(__dirname.substring(0, __dirname.lastIndexOf('/')), '/static/management.html'));
 });
