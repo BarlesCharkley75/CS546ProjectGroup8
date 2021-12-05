@@ -10,6 +10,10 @@
   "author": "Joseph Mirabile 10426348",
   "license": "ISC",
   "dependencies": {
+    "express-handlebars": "^5.3.4",
+    "express-session": "^1.17.2",
+    "handlebars": "^4.7.7",
+    "bcryptjs": "^2.4.3",
     "axios": "^0.24.0",
     "express": "^4.17.1",
     "mongodb": "^4.2.1"
