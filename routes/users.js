@@ -6,7 +6,7 @@ const user = data.users;
 
 router.get('/', async (req, res) => {
   if(req.session.user){
-    res.redirect('/profile');
+    res.render('partials/landing');
   }else{
     res.redirect('/login');
   }
@@ -14,9 +14,9 @@ router.get('/', async (req, res) => {
 });
 router.get('/login', async (req, res) => {
   if(req.session.user){
-    res.redirect('/profile');
+    res.render('partials/landing');
   }else{
-    res.render('hotelpages/login', {title : 'Login'});
+    res.render('partials/login', {title : 'Login'});
   }
 });
 
@@ -24,7 +24,7 @@ router.get('/signup', async (req, res) => {
   if(req.session.user){
       res.redirect('/profile');
   }else{
-      res.render('hotelpages/register', {});
+      res.render('partials/register', {});
   }
       
 });
@@ -51,12 +51,12 @@ router.post('/signup', async (req, res) => {
     age = parseInt(age)
     const newUser = await user.createUser(firstName, lastName, email, pfp, city, state, age, planToVisit, username, password);
     if(newUser['userInserted'] == true){
-      res.render('hotelpages/login', {title : 'Login'});
+      res.render('partials/login', {title : 'Login'});
     }else{
       res.status(500).json({error: 'Internal Server Error'});
     }
   }catch(e){
-    res.status(400).render('hotelpages/register', {title : 'Register', error: e});
+    res.status(400).render('partials/register', {title : 'Register', error: e});
   }
 
 });
@@ -74,13 +74,13 @@ router.post('/login', async (req, res) => {
         const newUser = await user.checkUser(username,password);
         if(newUser['authenticated'] == true){
           req.session.user = {Username: username};
-          res.redirect('/profile');
+          res.render('partials/landing');
         }else{
           res.status(500).json({error: 'Internal Server Error'});
     
         }
       }catch(e){
-        res.status(400).render('hotelpages/login', {title : 'Login', error: e});
+        res.status(400).render('partials/login', {title : 'Login', error: e});
     }
 
   }
@@ -90,16 +90,16 @@ router.post('/login', async (req, res) => {
 
 router.get('/profile', async (req, res) => {
   if(req.session.user){
-    res.render('hotelpages/profile', {title : 'Profile', name : req.session.user.Username});
+    res.render('partials/profile', {title : 'Profile', name : req.session.user.Username});
   }else{
-    res.render('hotelpages/login', {title : 'Login'});
+    res.render('partials/login', {title : 'Login'});
   }
     
 });
 
 router.get('/logout', async (req, res) => {
   req.session.destroy();
-  res.render('hotelpages/login', {title : 'Login'});
+  res.render('partials/login', {title : 'Login'});
 });
 
 router.get('/management', async (req, res) => {
