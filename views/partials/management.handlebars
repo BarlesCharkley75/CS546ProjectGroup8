@@ -3,13 +3,33 @@
     </header>
     <main>
         <div>
-           <h3>Name</h3> 
+           <h3>Admin</h3> 
         </div>
         <div>
-            <h3>Your Hotels</h3>
+            <h3>Hotels</h3>
+             <ul>
+                {{#if hotels.length}}
+                {{#each hotels}}  
+                <li>{{name}}</li>
+                <li>{{address}}</li>
+                {{/each}}
+                {{else}}
+                <p class="not-found">There is no hotels.</p>
+                {{/if}}
+      </ul> 
+
         </div>
         <div>
             <h3>Modify Hotel (Update, Add, Remove)</h3>
+            <a href="/addhotel">Click here to add hotel</a>  
+
+            {{#if hotels.length}}
+            <ul>
+                {{#each hotels}}
+                <li>{{name}}</li>
+                {{/each}}
+            </ul>
+            {{/if}}
         </div>
     </main>
 

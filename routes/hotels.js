@@ -9,12 +9,5 @@ router.get('/', function(req, res) {
     }
 });
 
-router.get('/manage', function(req, res) {
-    if(req.session.user){
-        res.render('partials/management');
-    }else{
-        res.redirect('/login', {});
-    }
-});
 
 module.exports = router;
