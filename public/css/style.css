@@ -21,7 +21,7 @@ main {
 }
 
 header {
-	border-bottom: 1px solid green;
+	border-bottom: 1px solid rgb(2, 117, 216);
     text-align: center;
 }
 
@@ -91,8 +91,8 @@ p {
 	width: 100%;
 	
 }
-button{
-	background-color: #4CAF50;
+/* button{
+	background-color: rgb(2, 117, 216);
 	border: none;
 	color: white;
 	padding: 16px 32px;
@@ -100,6 +100,19 @@ button{
 	margin: 4px 2px;
 	cursor: pointer;
 	text-align: center;
+} */
+.btn-custom {
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+	text-align: center;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
 }
 
 label {
@@ -107,21 +120,13 @@ label {
 }
 
 input{
-	background-color: gray;
   border: none;
   color: black;
   padding: 16px 32px;
   text-decoration: none;
   margin: 4px 2px;
   cursor: pointer;
-}
-
-.is-palindrome{
-    color:#0000FF;
-}
-
-.not-palindrome{
-    color:#FF0000;
+  border: 1px solid rgb(2, 117, 216);
 }
 
 .error{
@@ -138,4 +143,8 @@ footer{
 
 br{
     color: rgb(96, 144, 192);
+}
+
+.profile-header {
+	text-align: center;
 }
