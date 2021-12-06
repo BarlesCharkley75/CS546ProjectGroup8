@@ -4,10 +4,11 @@
 
 
 ## Group Members
-Joseph Mirabile
-Fabricio Flores
-Justin Bernstein
-Qinwen Pan
+
+ - Joseph Mirabile 
+ - Fabricio Flores 
+ - Justin Bernstein 
+ - Qinwen Pan
 
 ## Running the Program
 
