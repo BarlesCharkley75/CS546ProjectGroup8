@@ -1,12 +1,12 @@
-# CS546ProjectGroup8
+# CS546ProjectGroup8#
 
-#Group Members
+##Group Members
 Joseph Mirabile
 Fabricio Flores
 Justin Bernstein
 Qinwen Pan
 
-#Running the Program
+##Running the Program
 Download the files or clone the project and add the files to a directory containing a ```app.js``` file.
 
 Install the necessary dependencies by using
