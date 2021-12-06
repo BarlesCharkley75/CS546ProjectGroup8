@@ -1,4 +1,4 @@
-# CS546ProjectGroup8#
+# CS546ProjectGroup8
 
 ##Group Members
 Joseph Mirabile
