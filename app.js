@@ -24,7 +24,7 @@ app.use(
 
 app.use('/private', (req, res, next) => {
   if (!req.session.user) {
-    return res.status(403).render('hotelpages/error', {title: 'error'});
+    return res.status(403).render('partials/error', {title: 'error'});
   } else {
     next();
   }
