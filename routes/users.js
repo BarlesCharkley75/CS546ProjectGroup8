@@ -65,19 +65,26 @@ router.post('/login', async (req, res) => {
   let userData = req.body;
   let username = userData.username;
   let password = userData.password;
-  try{
-    username = username.toLowerCase();
-    const newUser = await user.checkUser(username,password);
-    if(newUser['authenticated'] == true){
-      req.session.user = {Username: username};
-      res.redirect('/profile');
-    }else{
-      res.status(500).json({error: 'Internal Server Error'});
-
+  if(username == 'admin' && password == 'admin'){
+    req.session.user = {Username: username};
+    res.redirect('/management');
+  }else{
+    try{
+        username = username.toLowerCase();
+        const newUser = await user.checkUser(username,password);
+        if(newUser['authenticated'] == true){
+          req.session.user = {Username: username};
+          res.redirect('/profile');
+        }else{
+          res.status(500).json({error: 'Internal Server Error'});
+    
+        }
+      }catch(e){
+        res.status(400).render('hotelpages/login', {title : 'Login', error: e});
     }
-  }catch(e){
-    res.status(400).render('hotelpages/login', {title : 'Login', error: e});
+
   }
+  
      
 });
 
@@ -94,6 +101,15 @@ router.get('/logout', async (req, res) => {
   req.session.destroy();
   res.render('hotelpages/login', {title : 'Login'});
 });
+
+router.get('/management', async (req, res) => {
+    if(req.session.user == undefined ||req.session.user.Username !='admin'){
+        res.status(500).json({error: 'You can not access this page without the permission.'});
+    }else{
+        res.render('hotelpages/management', {title : 'Hotel Management'});
+    }
+      
+  });
 
 
 module.exports = router;

@@ -21,8 +21,11 @@ module.exports = {
         if (!planToVisit || !Array.isArray(planToVisit)) throw "Error: planToVisit must be an array and only contain strings"
         for (let i = 0; i < planToVisit.length; i++)
             if (typeof planToVisit[i] !== "string" || planToVisit[i].trim().length == 0) throw "Error: planToVisit must be an array and only contain strings"
+        if (username == 'admin') throw "Error: This username cannot be registered"
         if (username.length < 4 || password.length < 6) throw "Error: username or password is not strong enough"
         const userCollection = await users();
+        let usergo = await userCollection.findOne({ username: username });
+        if(usergo != null)throw 'username has existed'
         const hash = await bcrypt.hash(password, saltRounds);
         let newUser = {
             firstName: firstName,
