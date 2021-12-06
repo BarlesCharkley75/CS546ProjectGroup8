@@ -48,6 +48,7 @@ router.post('/signup', async (req, res) => {
         planToVisit = [planToVisit]
     }
     username = username.toLowerCase();
+    age = parseInt(age)
     const newUser = await user.createUser(firstName, lastName, email, pfp, city, state, age, planToVisit, username, password);
     if(newUser['userInserted'] == true){
       res.render('partials/login', {title : 'Login'});
