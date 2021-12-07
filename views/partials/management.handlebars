@@ -26,7 +26,7 @@
             {{#if hotels.length}}
             <ul>
                 {{#each hotels}}
-                <li>{{name}}                                 <a href="/management/hotel/{{_id}}">Delete</a></li>
+                <li>{{name}}<a style="position: absolute;right: 200px; " href="/management/hotel/{{_id}}">Delete</a><a style="position: absolute;right: 100px; "href="/management/updatehotel/{{_id}}">Update</a></li>
                 {{/each}}
             </ul>
             {{/if}}

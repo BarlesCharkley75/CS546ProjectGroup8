@@ -92,8 +92,8 @@ module.exports = {
       return {"hotelId": id, "deleted": true}
     },
     
-    async update(id, name, phoneNumber, website, nearbyAttractions, serviceOptions){
-        if (!name || !phoneNumber || !website || !address || !city || !state || !zip || !amenities || !nearbyAttractions || !images || !overallRating || !reviews || !comments) throw "Error: All fields need to have valid values"   
+    async update(id, name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions){
+        if (!name || !phoneNumber || !website || !address || !city || !state || !zip || !amenities || !nearbyAttractions) throw "Error: All fields need to have valid values"   
         if (typeof name != "string") throw "Error: name must be a string"
         if (typeof phoneNumber != "string") throw "Error: phoneNumber must be a string"
         if (typeof website != "string") throw "Error: website type must be a string"
@@ -101,8 +101,7 @@ module.exports = {
         if (typeof city != "string") throw "Error: city type must be a string"
         if (typeof state != "string") throw "Error: state type must be a string"
         if (typeof zip != "string") throw "Error: zip type must be a string"
-        if (typeof images != "string") throw "Error: images must be a string"
-        if (name.trim().length == 0 || phoneNumber.trim().length == 0 || website.trim().length == 0 || address.trim().length == 0 || city.trim().length == 0 || state.trim().length == 0 || zip.trim().length == 0|| images.trim().length == 0) throw "Error: All fields must not be empty strings"
+        if (name.trim().length == 0 || phoneNumber.trim().length == 0 || website.trim().length == 0 || address.trim().length == 0 || city.trim().length == 0 || state.trim().length == 0 || zip.trim().length == 0) throw "Error: All fields must not be empty strings"
         if (phoneNumber.length != 12 || numCheck(phoneNumber[0]) == false || numCheck(phoneNumber[1]) == false || numCheck(phoneNumber[2]) == false || phoneNumber[3] != '-' || numCheck(phoneNumber[4]) == false || numCheck(phoneNumber[5]) == false || numCheck(phoneNumber[6]) == false || phoneNumber[7] != '-' || numCheck(phoneNumber[8]) == false || numCheck(phoneNumber[9]) == false || numCheck(phoneNumber[10]) == false || numCheck(phoneNumber[11]) == false) throw "Error: phoneNumber not in 'xxx-xxx-xxxx' format"
         if (website.length < 20 || website[0] != 'h' || website[1] != 't' || website[2] != 't' || website[3] != 'p' || website[4] != ':' || website[5] != '/' || website[6] != '/' || website[7] != 'w' || website[8] != 'w' || website[9] != 'w' || website[10] != '.' || website.slice(-4) != '.com') throw "Error: website must be in 'http://www.xxxxx.com' format"
         if (state.length != 2 || numCheck(state[0]) == true || numCheck(state[1]) == true) throw "Error: state must be a 2 letter string"
@@ -123,12 +122,11 @@ module.exports = {
             state: state,
             zip: zip,
             amenities: amenities,
-            nearbyAttractions: nearbyAttractions,
-            images: images
+            nearbyAttractions: nearbyAttractions
         };
         let parsedId = ObjectId(id);
         const updatedInfo = await hotelCollection.updateOne({ _id: parsedId }, {$set: newhotel});
         if (updatedInfo.modifiedCount === 0) throw "Error: could not properly update hotel";
-        return await this.get(id)
+        return {"hotelId": id, "updated": true}
     }
 }
