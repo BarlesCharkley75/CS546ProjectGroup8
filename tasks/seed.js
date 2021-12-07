@@ -1,12 +1,12 @@
 const dbConnection = require("../config/mongoConnection");
-const data = require("../data");
-const { createUser } = require("../data/traders");
+const data = require("../data/");
+const express = require('express')
+const router = express.Router()
 const registeredUsers = data.users;
 
 const main = async () => {
-  const db = await dbConnection;
+  const db = await dbConnection();
   await db.dropDatabase();
-
   let user1 = await registeredUsers.createUser(
     "David",
     "Smith",
@@ -16,9 +16,10 @@ const main = async () => {
     "NJ",
     25,
     ["Miami"],
-    davsmith001,
-    pass12345
+    "davsmith001",
+    "pass12345"
   );
+  console.log(user1);
   let user2 = await registeredUsers.createUser(
     "Mark",
     "Jones",
@@ -28,9 +29,10 @@ const main = async () => {
     "Texas",
     34,
     ["Seattle"],
-    marjon002,
-    pass12345
+    "marjon002",
+    "pass12345"
   );
+  console.log(user2);
   let user3 = await registeredUsers.createUser(
     "Brian",
     "Johnson",
@@ -40,9 +42,10 @@ const main = async () => {
     "CA",
     27,
     ["Las Vegas", "Orlando"],
-    brijoh003,
-    pass12345
+    "brijoh003",
+    "pass12345"
   );
+  console.log(user3);
 
   await db.serverConfig.close();
 };
