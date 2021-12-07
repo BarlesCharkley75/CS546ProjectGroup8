@@ -10,7 +10,7 @@
              <ul>
                 {{#if hotels.length}}
                 {{#each hotels}}  
-                <li>{{name}}</li>
+                <li><h4>{{name}}</h4></li>
                 <li>{{address}}</li>
                 {{/each}}
                 {{else}}
@@ -21,12 +21,12 @@
         </div>
         <div>
             <h3>Modify Hotel (Update, Add, Remove)</h3>
-            <a href="/addhotel">Click here to add hotel</a>  
+            <a href="/management/addhotel">Click here to add hotel</a>  
 
             {{#if hotels.length}}
             <ul>
                 {{#each hotels}}
-                <li>{{name}}</li>
+                <li>{{name}}                                 <a href="/management/hotel/{{_id}}">Delete</a></li>
                 {{/each}}
             </ul>
             {{/if}}

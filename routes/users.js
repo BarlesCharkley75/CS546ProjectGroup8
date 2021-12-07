@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const user = data.users;
+const hotel = data.hotels;
 
 
 router.get('/', async (req, res) => {
@@ -102,14 +103,30 @@ router.get('/logout', async (req, res) => {
   res.render('partials/login', {title : 'Login'});
 });
 
-router.get('/management', async (req, res) => {
+/* router.get('/management', async (req, res) => {
     if(req.session.user == undefined ||req.session.user.Username !='admin'){
         res.status(500).json({error: 'You can not access this page without the permission.'});
     }else{
-        res.render('hotelpages/management', {title : 'Hotel Management'});
+        const allHotels = await hotel.getAll();
+        res.render('hotelpages/management', {title : 'Hotel Management',hotels: allHotels});
     }
       
   });
-
+router.delete('/management/:id', async (req, res) => {
+    if (!req.params.id) throw 'You must specify an ID to delete';
+    try {
+      await hotel.get(req.params.id);
+    } catch (e) {
+      res.status(404).json({ error: 'restaurant not found' });
+      return;
+    }
+    let pid = req.params.id;
+    try {
+      await hotel.remove(req.params.id);
+      res.redirect('/management')
+    } catch (e) {
+      res.sendStatus(500);
+    }
+}); */
 
 module.exports = router;

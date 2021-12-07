@@ -1,9 +1,11 @@
 const path = require('path');
 const userRoutes = require('./users');
 const hotelRoutes = require('./hotels');
+const managementRoutes = require('./management');
 
 const constructorMethod = (app) => {
   app.use('/', userRoutes);
+  app.use('/management', managementRoutes);
   app.use('/hotels', hotelRoutes);
   app.use('/home', (req, res) => res.render('partials/landing'))
 

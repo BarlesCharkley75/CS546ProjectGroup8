@@ -51,7 +51,7 @@ module.exports = {
         const newId = insertInfo.insertedId;
         idString = newId.toString();
         const hotel = await this.get(idString);
-        return hotel   
+        return {"hotelInserted": true}
     },
 
     async getAll() {
