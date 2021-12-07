@@ -100,7 +100,7 @@ router.get('/profile', async (req, res) => {
 
 router.get('/logout', async (req, res) => {
   req.session.destroy();
-  res.render('partials/login', {title : 'Login'});
+  res.redirect('/login')
 });
 
 
