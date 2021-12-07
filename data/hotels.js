@@ -19,7 +19,10 @@ module.exports = {
         if (typeof zip != "string") throw "Error: zip type must be a string"
         if (typeof images != "string") throw "Error: images must be a string"
         if (name.trim().length == 0 || phoneNumber.trim().length == 0 || website.trim().length == 0 || address.trim().length == 0 || city.trim().length == 0 || state.trim().length == 0 || zip.trim().length == 0|| images.trim().length == 0) throw "Error: All fields must not be empty strings"
-        if (phoneNumber.length != 12 || numCheck(phoneNumber[0]) == false || numCheck(phoneNumber[1]) == false || numCheck(phoneNumber[2]) == false || phoneNumber[3] != '-' || numCheck(phoneNumber[4]) == false || numCheck(phoneNumber[5]) == false || numCheck(phoneNumber[6]) == false || phoneNumber[7] != '-' || numCheck(phoneNumber[8]) == false || numCheck(phoneNumber[9]) == false || numCheck(phoneNumber[10]) == false || numCheck(phoneNumber[11]) == false) throw "Error: phoneNumber not in 'xxx-xxx-xxxx' format"
+        let re = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+        if (phoneNumber.match(re) == null) {
+          throw "Error: The phone number is not of valid format: XXX-XXX-XXXX";
+        }
         if (website.length < 20 || website[0] != 'h' || website[1] != 't' || website[2] != 't' || website[3] != 'p' || website[4] != ':' || website[5] != '/' || website[6] != '/' || website[7] != 'w' || website[8] != 'w' || website[9] != 'w' || website[10] != '.' || website.slice(-4) != '.com') throw "Error: website must be in 'http://www.xxxxx.com' format"
         if (state.length != 2 || numCheck(state[0]) == true || numCheck(state[1]) == true) throw "Error: state must be a 2 letter string"
         if (zip.length != 5 || numCheck(zip[0]) == false || numCheck(zip[1]) == false || numCheck(zip[2]) == false || numCheck(zip[3]) == false || numCheck(zip[4]) == false) throw "Error: zip code must be a 5 number string"
