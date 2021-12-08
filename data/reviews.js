@@ -7,10 +7,9 @@ const { ObjectID } = require('bson');
 module.exports = {
     async create(hotelId, title, reviewer, rating, review)
     {
-        if(!hotelId || !userId || !reviewText || !rating) throw "All fields need to have valid values"
+        if(!hotelId || !title || !reviewer || !rating || review) throw "All fields need to have valid values"
         if(!ObjectId.isValid(hotelId)) throw "Error: hotelId must be valid"
-        if(!ObjectId.isValid(userId)) throw "Error: hotelId must be valid"
-        if(typeof reviewText != "string") throw "Error: reviewer must be a string"
+        if(typeof reviewer != "string") throw "Error: reviewer must be a string"
         if(typeof rating != 'number') throw "Error: rating must be an integer"
         if(rating < 1 || rating > 5) throw "Error: rating must be between 0 and 5"
         if(typeof review != "string") throw "Error: review type must be a string";

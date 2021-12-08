@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const user = data.users;
-
+const hotel = data.hotels;
 
 router.get('/home', async (req, res) => {
   if(req.session.user){
-    res.render('partials/landing',{title : 'Home Page'});
+    const allHotels = await hotel.getAll();
+    res.render('partials/landing',{title : 'Home Page', hotels : allHotels});
   }else{
     res.redirect('/login');
   }

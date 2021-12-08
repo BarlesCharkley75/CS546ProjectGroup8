@@ -10,9 +10,19 @@
         </div>
     </header>
     <section>
-        <h2>What is Hotel Finder?</h2>
+        <h2 align="center">What is Hotel Finder?</h2>
         <p>It's your one stop shop for finding your next hotel!</p>
     </section>
+    <div>
+            <h1>Hotel List</h1>
+            {{#if hotels.length}}
+            <ul id="hotelsList">
+                {{#each hotels}}
+                <li><a href="/hotels/{{_id}}">{{name}}</a></li>
+                {{/each}}
+            </ul>
+            {{/if}}
+        </div>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"

@@ -1,0 +1,73 @@
+<article class="post">
+  <div><h1>{{name}}</h1></div>
+
+  <img src="{{images}}", alt="{{name}}">
+
+
+  <h2>PhoneNumber</h2>
+  <h4>{{phoneNumber}}</h4>
+
+
+  <h2>Website</h2>
+  <a href="{{website}}">{{website}}</a>
+
+
+  <h2>Address</h2>
+  <h4>{{address}}</h4>
+
+
+  <h2>City</h2>
+  <h4>{{city}}</h4>
+
+  <h2>State</h2>
+  <h4>{{state}}</h4>
+
+  <h2>Zip</h2>
+  <h4>{{zip}}</h4>
+
+  
+  <h2>OverallRating</h2>
+  <h4>{{overallRating}}</h4>
+
+  {{#if amenities.length}}
+    <h2>Amenities</h2>
+    <ul>
+      {{#each amenities}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  {{#if nearbyAttractions.length}}
+    <h2>NearbyAttractions</h2>
+    <ul>
+      {{#each nearbyAttractions}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  {{#if reviews.length}}
+    <h2>Reviews</h2>
+    <ul>
+      {{#each reviews}}
+        <li><h3>{{reviews.title}}</h3></li>
+        <li><h4>{{reviews.review}}</h4></li>
+        <li><h4>{{reviews.rating}}</h4></li>
+        <li><h4>reviewer:{{reviews.reviewer}}</h4></li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+  {{#if comments.length}}
+    <h2>Comments</h2>
+    <ul>
+      {{#each comments}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+
+  <a href="/hotels">Back to search</a>
+</article>

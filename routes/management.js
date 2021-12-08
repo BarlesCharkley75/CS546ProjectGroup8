@@ -41,7 +41,7 @@ router.get('/updatehotel/:id', async (req, res) => {
     if(req.session.user == undefined ||req.session.user.Username !='admin'){
         res.status(500).json({error: 'You can not access this page without the permission.'});
     }else{
-        thisHotel = await hotel.get(req.params.id);
+        const thisHotel = await hotel.get(req.params.id);
         res.render('partials/updatehotel', {title : 'Update Hotel', hotelname : thisHotel.name, _id : req.params.id});
     }
 });

@@ -27,11 +27,19 @@ router.post('/', async (req, res) => {
         }catch(e){
           res.status(400).render('partials/hotel', {title : 'Search', error: e});
       }
-  
-    
-    
-       
   });
 
+  router.get('/:id', async (req, res) => {
+    if(req.session.user){
+        try{
+            const thisHotel = await hotel.get(req.params.id);
+            res.render('partials/individual', {title : 'Hotel', name : thisHotel.name, phoneNumber : thisHotel.phoneNumber, website : thisHotel.website, address : thisHotel.address, city : thisHotel.city, state : thisHotel.state, zip : thisHotel.zip, amenities : thisHotel.amenities, nearbyAttractions : thisHotel.nearbyAttractions, images : thisHotel.images, overallRating : thisHotel.overallRating, reviews : thisHotel.reviews, comments : thisHotel.comments});
+          }catch(e){
+            res.status(400).render('partials/hotel', {title : 'Search', error: e});
+        }
+    }else{
+        res.redirect('/login');
+    }
+});
 
 module.exports = router;
