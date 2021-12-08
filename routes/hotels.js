@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const user = data.users;
 const hotel = data.hotels;
+const review = data.reviews;
 
 router.get('/', function(req, res) {
     if(req.session.user){
@@ -33,7 +34,30 @@ router.post('/', async (req, res) => {
     if(req.session.user){
         try{
             const thisHotel = await hotel.get(req.params.id);
-            res.render('partials/individual', {title : 'Hotel', name : thisHotel.name, phoneNumber : thisHotel.phoneNumber, website : thisHotel.website, address : thisHotel.address, city : thisHotel.city, state : thisHotel.state, zip : thisHotel.zip, amenities : thisHotel.amenities, nearbyAttractions : thisHotel.nearbyAttractions, images : thisHotel.images, overallRating : thisHotel.overallRating, reviews : thisHotel.reviews, comments : thisHotel.comments});
+            res.render('partials/individual', {title : 'Hotel', name : thisHotel.name, phoneNumber : thisHotel.phoneNumber, website : thisHotel.website, address : thisHotel.address, city : thisHotel.city, state : thisHotel.state, zip : thisHotel.zip, amenities : thisHotel.amenities, nearbyAttractions : thisHotel.nearbyAttractions, images : thisHotel.images, overallRating : thisHotel.overallRating, reviews : thisHotel.reviews, comments : thisHotel.comments, id : req.params.id});
+          }catch(e){
+            res.status(400).render('partials/hotel', {title : 'Search', error: e});
+        }
+    }else{
+        res.redirect('/login');
+    }
+});
+
+router.post('/:id', async (req, res) => {
+    let reviewData = req.body;
+    let reviewTitle = reviewData.reviewTitle;
+    let reviewContent = reviewData.reviewContent;
+    let rating = reviewData.rating;
+
+    if(req.session.user){
+        try{
+            rating = parseInt(rating);
+            const addReview = await review.create(req.params.id, reviewTitle, req.session.user.Username, rating, reviewContent);
+            if(addReview){
+                res.redirect('/hotels/'+req.params.id);
+              }else{
+                res.status(500).json({error: 'Internal Server Error'});
+              }
           }catch(e){
             res.status(400).render('partials/hotel', {title : 'Search', error: e});
         }

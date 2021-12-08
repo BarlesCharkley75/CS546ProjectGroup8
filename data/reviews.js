@@ -7,9 +7,9 @@ const { ObjectID } = require('bson');
 module.exports = {
     async create(hotelId, title, reviewer, rating, review)
     {
-        if(!hotelId || !title || !reviewer || !rating || review) throw "All fields need to have valid values"
+        if(!hotelId || !title || !reviewer || !rating || !review) throw "All fields need to have valid values"
         if(!ObjectId.isValid(hotelId)) throw "Error: hotelId must be valid"
-        if(typeof reviewer != "string") throw "Error: reviewer must be a string"
+        if(typeof review != "string") throw "Error: reviewer must be a string"
         if(typeof rating != 'number') throw "Error: rating must be an integer"
         if(rating < 1 || rating > 5) throw "Error: rating must be between 0 and 5"
         if(typeof review != "string") throw "Error: review type must be a string";
@@ -35,7 +35,7 @@ module.exports = {
         for(i of addReviews){
             sum += i.rating
         }
-        mean = sum/addReviews.length
+        mean = sum/addReviews.length;
         const voyage = {
             name: hotel.name,
             phoneNumber: hotel.phoneNumber,
@@ -46,7 +46,7 @@ module.exports = {
             zip: hotel.zip,
             amenities: hotel.amenities,
             nearbyAttractions: hotel.nearbyAttractions,
-            rating: mean,
+            overallRating: mean,
             images: hotel.images,
             reviews: addReviews,
             comments: hotel.comments

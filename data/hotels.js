@@ -3,6 +3,7 @@ const hotels = mongoCollections.hotels;
 const users = mongoCollections.users;
 const ObjectId = require('mongodb').ObjectId
 
+
 function numCheck(x) {
   return /^-?\d+$/.test(x);
 }
