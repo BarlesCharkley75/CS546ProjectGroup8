@@ -45,25 +45,34 @@ router.post('/', async (req, res) => {
 
 router.post('/:id', async (req, res) => {
     let reviewData = req.body;
-    let reviewTitle = reviewData.reviewTitle;
-    let reviewContent = reviewData.reviewContent;
-    let rating = reviewData.rating;
-
-    if(req.session.user){
-        try{
-            rating = parseInt(rating);
-            const addReview = await review.create(req.params.id, reviewTitle, req.session.user.Username, rating, reviewContent);
-            if(addReview){
-                res.redirect('/hotels/'+req.params.id);
-              }else{
-                res.status(500).json({error: 'Internal Server Error'});
-              }
-          }catch(e){
-            res.status(400).render('partials/hotel', {title : 'Search', error: e});
-        }
+    if(req.body.addHotelName){  
+        console.log(req.body.addHotelName);
+        const userId = await user.getUser(req.session.user.Username);
+        const plan = await user.planVisit(userId,req.body.addHotelName);
+        res.redirect('/hotels/'+req.params.id);
     }else{
+
+        let reviewTitle = reviewData.reviewTitle;
+        let reviewContent = reviewData.reviewContent;
+        let rating = reviewData.rating;
+
+        if(req.session.user){
+            try{
+                rating = parseInt(rating);
+                const addReview = await review.create(req.params.id, reviewTitle, req.session.user.Username, rating, reviewContent);
+                if(addReview){
+                    res.redirect('/hotels/'+req.params.id);
+                }else{
+                    res.status(500).json({error: 'Internal Server Error'});
+                }
+             }catch(e){
+                res.status(400).render('partials/hotel', {title : 'Search', error: e});
+            }
+        }else{
         res.redirect('/login');
+        }
     }
+    
 });
 
 module.exports = router;

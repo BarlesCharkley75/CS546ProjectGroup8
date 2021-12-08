@@ -2,6 +2,7 @@ const mongoCollections = require("../config/mongoCollections");
 const users = mongoCollections.users;
 
 const bcrypt = require('bcrypt');
+const { ObjectId } = require("bson");
 const saltRounds = 16;
 
 module.exports = {
@@ -67,14 +68,25 @@ module.exports = {
         }
     },
 
+    async getUser(username){
+        if (!username) throw "Error: input required"
+        if (typeof username != "string") throw "Error: username must be a valid string"
+        if (username.trim().length == 0) throw "Error: inputs must not be only spaces"
+        if (username.length < 4) throw "Error: username or password is not strong enough"
+        const userCollection = await users();
+        const user = await userCollection.findOne({username: username});
+        return user._id;
+    },
+
     async planVisit(id, location) {
         if (!id) throw "You must provide an ID value";
         if (!location|| typeof location !== "string") throw "You must provide the name of the drink";
         const userCollection = await users();
         const user = await userCollection.findOne({ _id: id });
         if (user === null) throw `No user with ID ${id}`;
+        let p = user.planToVisit;
+        p.push(location);
         let userTrip = {
-            _id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
@@ -82,15 +94,15 @@ module.exports = {
             city: user.city,
             state: user.state,
             age: user.age,
-            planToVisit: user.planToVisit.push(location),
+            planToVisit: p,
             username: user.username,
             password: user.password,
             reviewIds: user.reviewIds,
             commentIds: user.commentIds
         };
-        const voyage = await userCollection.updateOne({ _id: id }, userTrip);
+        const voyage = await userCollection.updateOne({ _id: id }, {$set: userTrip});
         if (voyage.modifiedCount === 0) throw `Could not add trip location to ${id}`;
     
-        return await this.get(id);
+        return {add: true};
     }
 }
