@@ -2,12 +2,19 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const user = data.users;
-const hotel = data.hotels;
 
 
+router.get('/home', async (req, res) => {
+  if(req.session.user){
+    res.render('partials/landing',{title : 'Home Page'});
+  }else{
+    res.redirect('/login');
+  }
+    
+});
 router.get('/', async (req, res) => {
   if(req.session.user){
-    res.render('partials/landing');
+    res.render('partials/landing',{title : 'Home Page'});
   }else{
     res.redirect('/login');
   }
@@ -25,7 +32,7 @@ router.get('/signup', async (req, res) => {
   if(req.session.user){
       res.redirect('/profile');
   }else{
-      res.render('partials/register', {});
+      res.render('partials/register', {title : 'Sign Up'});
   }
       
 });
@@ -75,7 +82,7 @@ router.post('/login', async (req, res) => {
         const newUser = await user.checkUser(username,password);
         if(newUser['authenticated'] == true){
           req.session.user = {Username: username};
-          res.render('partials/landing');
+          res.redirect('/home');
         }else{
           res.status(500).json({error: 'Internal Server Error'});
     

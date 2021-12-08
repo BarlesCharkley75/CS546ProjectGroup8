@@ -1,17 +1,24 @@
 <header>
+    <p class="error"> {{error}}</p>
     <div class="jumbotron text-center">
         <h1>Hotel Finder</h1>
-        <form action="" method="POST" id="hotelSearchForm">
+        <form action="/hotels" method="POST" id="hotelSearchForm">
             <label for="searchTerm">Search by hotel name or location</label>
             <br>
-            <input type="text" id="searchTerm" name="searchTerm">
+            <input type="text" id="searchTerm" name="searchTerm" value="{{searchTerm}}">
             <input type="submit" value="Find your hotel!" />
         </form>
     </div>
 </header>
 
-<ul id="hotelsList"></ul>
 
+            {{#if hotels.length}}
+            <ul id="hotelsList">
+                {{#each hotels}}
+                <li><a href="/hotels/{{_id}}">{{name}}</a></li>
+                {{/each}}
+            </ul>
+            {{/if}}
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>

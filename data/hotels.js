@@ -95,6 +95,25 @@ module.exports = {
       return {"hotelId": id, "deleted": true}
     },
     
+    async search(searchTerm) {
+      if (typeof searchTerm != "string" || searchTerm.trim().length == 0) throw "Error: searchTerm must be a non empty string";
+      let reg = new RegExp(searchTerm);
+      let _filter = {
+        $or: [
+            {'name': {$regex: reg, $options: 'i'}},
+            {'address': {$regex: reg, $options: 'i'}},
+        ]
+    }
+      const hotelCollection = await hotels();
+   
+      const Hotels = await hotelCollection.find(_filter).toArray();
+      if (Hotels === null) throw 'Error: No search result';
+      for(let x in Hotels){
+        Hotels[x]._id = Hotels[x]._id.toString();
+      }
+      return Hotels
+    },
+    
     async update(id, name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions){
         if (!name || !phoneNumber || !website || !address || !city || !state || !zip || !amenities || !nearbyAttractions) throw "Error: All fields need to have valid values"   
         if (typeof name != "string") throw "Error: name must be a string"
