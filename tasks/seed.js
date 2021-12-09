@@ -130,7 +130,7 @@ const main = async () => {
     "07030",
     ["Food", "Water"],
     ["Water Park"],
-    "hotel_five.jpg"
+    "../public/images/hotel_one.jpg"
   );
   console.log(hotel1);
 
@@ -144,7 +144,7 @@ const main = async () => {
     "07030",
     ["Buffet", "Water"],
     ["Pool", "McDonalds"],
-    "hotel_one.jpg"
+    "../public/images/hotel_two.jpg"
   );
   console.log(hotel2);
 
@@ -158,7 +158,7 @@ const main = async () => {
     "07030",
     ["Master Chef", "Massage"],
     ["Water Park", "Hibachi"],
-    "hotel_three.jpg"
+    "../public/images/hotel_three.jpg"
   );
   console.log(hotel3);
 
@@ -172,7 +172,7 @@ const main = async () => {
     "07030",
     ["First Class", "Beach"],
     ["Yacht Club"],
-    "hotel_four.jpg"
+    "../public/images/hotel_four.jpg"
   );
   console.log(hotel4);
 
@@ -186,7 +186,7 @@ const main = async () => {
     "07030",
     ["Pizza Parlor"],
     ["Poker Club"],
-    "hotel_six.jpg"
+    "../public/images/hotel_five.jpg"
   );
   console.log(hotel5);
 
