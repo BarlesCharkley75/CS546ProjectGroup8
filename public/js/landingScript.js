@@ -1,7 +1,9 @@
-$("input:text").val("");
+(function($) {
 
-// $("#hotelSearchForm").submit(function(event) {
-//     // event.preventDefault();
-//     const searchVal = $('#searchTerm').val();
-    
-// })
+	$('#loginBar').hide();
+    $('#registerBar').hide();
+
+
+       
+
+})(window.jQuery);

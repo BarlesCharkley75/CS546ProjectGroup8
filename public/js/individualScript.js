@@ -1,5 +1,8 @@
 (function($) {
 
+    $('#loginBar').hide();
+    $('#registerBar').hide();
+    
 	let myH = $('#hotelName'),
         myButton = $('#addHotel');
 

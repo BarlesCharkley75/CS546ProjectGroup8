@@ -1,7 +1,8 @@
-/* let hotelList = $("#hotelsList")
+(function($) {
 
-let tmpList = ['One', 'Two', 'Three', 'Four', 'Five']
+	$('#loginBar').hide();
+    $('#registerBar').hide();
 
-tmpList.forEach(element => {
-    hotelList.append("<li>" + element + "</l1>")
-}) */
+       
+
+})(window.jQuery);
