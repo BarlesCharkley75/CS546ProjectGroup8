@@ -114,7 +114,7 @@ router.get('/profile', async (req, res) => {
       rList[x]._id = rList[x]._id.toString();
     }
     
-    res.render('partials/profile', {title : 'Profile', name : req.session.user.Username, email : User.email, php : User.php, city : User.city, state : User.state, age : User.age, planToVisit : User.planToVisit, reviews : rList});
+    res.render('partials/profile', {title : 'Profile', name : req.session.user.Username, email : User.email, pfp : User.pfp, city : User.city, state : User.state, age : User.age, planToVisit : User.planToVisit, reviews : rList});
   }else{
     res.render('partials/login', {title : 'Login'});
   }
