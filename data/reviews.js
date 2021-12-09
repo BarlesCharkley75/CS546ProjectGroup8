@@ -1,19 +1,21 @@
 const mongoCollections = require("../config/mongoCollections");
 const hots = require('./hotels')
+const reviews = mongoCollections.reviews;
 const hotels = mongoCollections.hotels;
+const users = mongoCollections.users;
 const ObjectId = require('mongodb').ObjectId
 const { ObjectID } = require('bson');
 
 module.exports = {
-    async create(hotelId, title, reviewer, rating, review)
+    async createReview(hotelId, userId, reviewText, rating)
     {
-        if(!hotelId || !title || !reviewer || !rating || !review) throw "All fields need to have valid values"
+        if(!hotelId || !userId || !reviewText || !rating) throw "All fields need to have valid values"
         if(!ObjectId.isValid(hotelId)) throw "Error: hotelId must be valid"
-        if(typeof review != "string") throw "Error: reviewer must be a string"
+        if(!ObjectId.isValid(userId)) throw "Error: hotelId must be valid"
+        if(typeof reviewText != "string") throw "Error: reviewer must be a string"
         if(typeof rating != 'number') throw "Error: rating must be an integer"
         if(rating < 1 || rating > 5) throw "Error: rating must be between 0 and 5"
-        if(typeof review != "string") throw "Error: review type must be a string";
-        if(hotelId.trim().length == 0 || title.trim().length == 0 || reviewer.trim().length == 0 || review.trim().length == 0) throw "Error: All fields must not be empty strings"
+        if(hotelId.trim().length == 0 || userId.trim().length == 0 ||reviewText.trim().length == 0) throw "Error: All fields must not be empty strings"
         let hotel
         try {
             hotel = await hots.get(hotelId)
@@ -21,21 +23,26 @@ module.exports = {
             throw `Error: hotel with id ${hotelId} does not exist`
         }
         const hotelCollection = await hotels();
+        const userCollection = await users();
         newReview = {
             _id: ObjectID(),
-            title: title,
-            reviewer: reviewer,
-            rating: rating,
-            review: review
+            hotelId: hotelId,
+            userId: userId,
+            reviewText: reviewText,
+            rating: rating
         }
+        const reviewCollect = await reviewsCollection.insertOne(newReview)
+        if (reviewCollect.insertedCount === 0) throw 'Could not add review';
+        const id = reviewCollect.insertedId.toString()
         addReviews = hotel.reviews
+        moreReviews = user.reviewIds
         addReviews.push(newReview)
         let sum = 0
         let mean = 0
         for(i of addReviews){
             sum += i.rating
         }
-        mean = sum/addReviews.length;
+        mean = sum/addReviews.length
         const voyage = {
             name: hotel.name,
             phoneNumber: hotel.phoneNumber,
@@ -46,11 +53,15 @@ module.exports = {
             zip: hotel.zip,
             amenities: hotel.amenities,
             nearbyAttractions: hotel.nearbyAttractions,
-            overallRating: mean,
+            rating: mean,
             images: hotel.images,
             reviews: addReviews,
             comments: hotel.comments
         }
+        await userCollection.updateOne(
+            { _id: ObjectID(userId) },
+            { $addToSet: { reviewIds: id }  
+        });
         hotId = ObjectId(hotelId)
         const insertReview = await hotelCollection.updateOne({_id: hotId}, {$set: voyage});
         if (insertReview.modifiedCount == 0) throw 'Error: Could not insert new review'
@@ -58,7 +69,7 @@ module.exports = {
         return reviewedhotel;
     },
 
-    async getAll(hotelId) {
+    async getAllHotelReviews(hotelId) {
         if (!hotelId) throw 'Error: hotelId must have valid input';
         if (typeof hotelId != "string" || hotelId.trim().length == 0) throw "Error: hotelId must be a non empty string";
         if(!ObjectId.isValid(hotelId)) throw "Error: hotelId must be a valid ObjectId";
@@ -70,7 +81,7 @@ module.exports = {
         return hotel.reviews;
       },
 
-    async get(reviewId){
+    async getReview(reviewId){
         if (!reviewId) throw "Error: reviewId must be valid";
         if (typeof reviewId != "string" || reviewId.trim().length == 0) throw "Error: reviewId must be a string and must not be empty";
         if(!reviewId || !ObjectId.isValid(reviewId)) throw "Error: must provide a valid reviewId to search for"
@@ -88,7 +99,7 @@ module.exports = {
         throw "Error: No review exists with that reviewId"
     },
 
-    async remove(reviewId){
+    async removeReview(reviewId){
         if(!reviewId) throw "Error: no reviewId provided"
         if (typeof reviewId != "string") throw "Error: reviewId must be a string"
         if(!reviewId || !ObjectId.isValid(reviewId)) throw "Error: must provide a valid reviewId to search for"

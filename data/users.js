@@ -7,7 +7,7 @@ const saltRounds = 16;
 
 module.exports = {
     async createUser(firstName, lastName, email, pfp, city, state, age, planToVisit, username, password){
-        if (!firstName || !lastName || !email || !pfp || !city || !state | !age || !planToVisit || !username || !password) throw "Error: input required"
+        if (!firstName || !lastName || !email || !city || !state | !age || !planToVisit || !username || !password) throw "Error: input required"
         if (typeof firstName != "string") throw "Error: firstName must be a valid string"
         if (typeof lastName != "string") throw "Error: lastName must be a valid string"
         if (typeof email != "string") throw "Error: email must be a valid string"
@@ -17,7 +17,7 @@ module.exports = {
         if (typeof age != "number") throw "Error: age must be a valid number"
         if (typeof username != "string") throw "Error: username must be a valid string"
         if (typeof password != "string") throw "Error: password must be a valid string"
-        if (firstName.trim().length == 0 || lastName.trim().length == 0 || email.trim().length == 0 || pfp.trim().length == 0 || city.trim().length == 0 || state.trim().length == 0 || username.trim().length == 0 || password.trim().length == 0) throw "Error: inputs must not be only spaces"
+        if (firstName.trim().length == 0 || lastName.trim().length == 0 || email.trim().length == 0 || city.trim().length == 0 || state.trim().length == 0 || username.trim().length == 0 || password.trim().length == 0) throw "Error: inputs must not be only spaces"
         if (email.length < 8 || (email.slice(-4) != '.com' && email.slice(-4) != ".edu")) throw "Error: email must end in .com"
         if (!planToVisit || !Array.isArray(planToVisit)) throw "Error: planToVisit must be an array and only contain strings"
         for (let i = 0; i < planToVisit.length; i++)

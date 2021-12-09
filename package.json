@@ -4,10 +4,9 @@
   "description": "Our final project module",
   "main": "seed.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "author": "Joseph Mirabile 10426348",
+  "author": "Group 8",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",

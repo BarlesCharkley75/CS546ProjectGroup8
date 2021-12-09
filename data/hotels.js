@@ -2,6 +2,7 @@ const mongoCollections = require("../config/mongoCollections");
 const hotels = mongoCollections.hotels;
 const users = mongoCollections.users;
 const ObjectId = require('mongodb').ObjectId
+const { ObjectID } = require('bson');
 
 
 function numCheck(x) {
@@ -9,7 +10,7 @@ function numCheck(x) {
 }
 
 module.exports = {
-    async create(name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions, images){
+    async createHotel(name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions, images){
         if (!name || !phoneNumber || !website || !address || !city || !state || !zip || !amenities || !nearbyAttractions || !images) throw "Error: All fields need to have valid values"   
         if (typeof name != "string") throw "Error: name must be a string"
         if (typeof phoneNumber != "string") throw "Error: phoneNumber must be a string"
@@ -52,13 +53,10 @@ module.exports = {
         
         const insertInfo = await hotelCollection.insertOne(newhotel);
         if (insertInfo.insertedCount === 0) throw 'Error: Could not add hotel';
-        const newId = insertInfo.insertedId;
-        idString = newId.toString();
-        const hotel = await this.get(idString);
         return {"hotelInserted": true}
     },
 
-    async getAll() {
+    async getAllHotels() {
       const hotelCollection = await hotels();
   
       const hotelList = await hotelCollection.find({}).toArray();
@@ -70,7 +68,7 @@ module.exports = {
       return hotelList;
     },
 
-    async get(id) {
+    async getHotel(id) {
       if (!id) throw 'Error: id must have valid input';
       if (typeof id != "string" || id.trim().length == 0) throw "Error: id must be a non empty string";
       if(!ObjectId.isValid(id)) throw "Error: id must be a valid ObjectId";
@@ -83,7 +81,7 @@ module.exports = {
       return hot;
     },
 
-    async remove(id) {
+    async removeHotel(id) {
       if (!id) throw 'Error: id must have valid input';
       if (typeof id != "string" || id.trim().length == 0) throw "Error: id must be a non empty string";
       if(!ObjectId.isValid(id)) throw "Error: id must be a valid ObjectId";
@@ -96,7 +94,7 @@ module.exports = {
       return {"hotelId": id, "deleted": true}
     },
     
-    async search(searchTerm) {
+    async searchHotel(searchTerm) {
       if (typeof searchTerm != "string" || searchTerm.trim().length == 0) throw "Error: searchTerm must be a non empty string";
       let reg = new RegExp(searchTerm);
       let _filter = {
@@ -115,7 +113,7 @@ module.exports = {
       return Hotels
     },
     
-    async update(id, name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions){
+    async updateHotel(id, name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions){
         if (!name || !phoneNumber || !website || !address || !city || !state || !zip || !amenities || !nearbyAttractions) throw "Error: All fields need to have valid values"   
         if (typeof name != "string") throw "Error: name must be a string"
         if (typeof phoneNumber != "string") throw "Error: phoneNumber must be a string"

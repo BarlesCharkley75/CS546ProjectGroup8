@@ -3,11 +3,14 @@ const data = require("../data/");
 const express = require('express')
 const router = express.Router()
 const registeredUsers = data.users;
+const hotels = data.hotels;
+const reviews = data.reviews;
+const comments = data.comments;
 
 const main = async () => {
   const db = await dbConnection();
   await db.dropDatabase();
-  let user1 = await registeredUsers.createUser(
+  const user1 = await registeredUsers.createUser(
     "David",
     "Smith",
     "davsmi@gmail.com",
@@ -47,6 +50,34 @@ const main = async () => {
   );
   console.log(user3);
 
+  const hotel1 = await hotels.createHotel(
+    "Brian",
+    "222-222-2222",
+    "http://www.brianhotel.com",
+    "729 Street",
+    "San Diego",
+    "CA",
+    "11010",
+    ["Food", "Water"],
+    ["Water Park"],
+    "hotel_five.jpg"
+  );
+  console.log(hotel1);
+
+  let review1 = await reviews.createReview(
+    hotel1._id.toString(),
+    user1._id.toString(),
+    "wow look at this review",
+    5
+  );
+  console.log(review1);
+
+  let comment1 = await comments.createComment(
+    hotel1._id.toString(),
+    user1._id.toString(),
+    "wow look at this comment"
+  );
+  console.log(comment1);
   await db.serverConfig.close();
 };
 
