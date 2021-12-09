@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     let searchData = req.body;
     let searchTerm = searchData.searchTerm;
     try{
-          const hotels = await hotel.search(searchTerm);
+          const hotels = await hotel.searchHotel(searchTerm);
           console.log(hotels);
           if(hotels){
             res.render('partials/hotel', {title : 'Hotels', hotels : hotels});
@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
   router.get('/:id', async (req, res) => {
     if(req.session.user){
         try{
-            const thisHotel = await hotel.get(xss(req.params.id));
+            const thisHotel = await hotel.getHotel(xss(req.params.id));
             res.render('partials/individual', {title : 'Hotel', name : thisHotel.name, phoneNumber : thisHotel.phoneNumber, website : thisHotel.website, address : thisHotel.address, city : thisHotel.city, state : thisHotel.state, zip : thisHotel.zip, amenities : thisHotel.amenities, nearbyAttractions : thisHotel.nearbyAttractions, images : thisHotel.images, overallRating : thisHotel.overallRating, reviews : thisHotel.reviews, comments : thisHotel.comments, id : xss(req.params.id)});
           }catch(e){
             res.status(400).render('partials/hotel', {title : 'Search', error: e});

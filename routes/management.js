@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     if(req.session.user == undefined || req.session.user.Username !='admin'){
         res.status(500).json({error: 'You can not access this page without the permission.'});
     }else{
-        const allHotels = await hotel.getAll();
+        const allHotels = await hotel.getAllHotels();
         res.render('partials/management', {title : 'Hotel Management',hotels: allHotels});
     }
       
@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 router.get('/hotel/:id', async (req, res) => {
     if (!req.params.id) throw 'You must specify an ID to delete';
     try {
-      await hotel.get(xss(req.params.id));
+      await hotel.getHotel(xss(req.params.id));
     } catch (e) {
       res.status(404).json({ error: 'hotel not found' });
       return;
@@ -41,7 +41,7 @@ router.get('/updatehotel/:id', async (req, res) => {
     if(req.session.user == undefined || req.session.user.Username != 'admin'){
         res.status(500).json({error: 'You can not access this page without the permission.'});
     }else{
-        const thisHotel = await hotel.get(xss(req.params.id));
+        const thisHotel = await hotel.getHotel(xss(req.params.id));
         res.render('partials/updatehotel', {title : 'Update Hotel', hotelname : thisHotel.name, _id : xss(req.params.id)});
     }
 });

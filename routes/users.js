@@ -7,7 +7,7 @@ const xss = require('xss');
 
 router.get('/home', async (req, res) => {
   if(req.session.user){
-    const allHotels = await hotel.getAll();
+    const allHotels = await hotel.getAllHotels();
     res.render('partials/landing',{title : 'Home Page', hotels : allHotels});
   }else{
     res.redirect('/login');
