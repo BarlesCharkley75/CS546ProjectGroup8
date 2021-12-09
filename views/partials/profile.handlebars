@@ -4,48 +4,52 @@
     <main class="text-center">
         <div>
            <h2>Welcome {{name}}!</h2> 
-            <h2>Planned Trips</h2>
         </div>
-        <div >
-        </div>
-        <div >
-            <h2>Past Trips</h2>
-            {{#if trips.length}}
-                <ul id="tripsLists">
-                    {{#each trips}}
-                        <li>{{trip}}</li>
-                    {{/each}}
-                </ul>
-            {{/if}}
-        </div>
-        <div>
-            <h2>Comments</h2>
-            {{#if comments.length}}
-                <ul id="commentsList">
-                    {{#each comments}}
-                    <li>{{comment}}</li>
-                    {{/each}}
-                </ul>
-            {{/if}}
-        </div>
-        <div>
-            <h2>Reviews</h2>
-            <ul>
-                {{#if reviews.length}}
-                    <ul id="reviewsList">
-                        {{#each reviews}}
-                        <li>{{review}}</li>
-                        {{/each}}
-                    </ul>
-                {{/if}}
-                <li>
-                    Review One
-                </li>
-                <li>
-                    Review Two
-                </li>
-            </ul> 
-        </div>
+        <h2>Email</h2>
+        <h4>{{email}}</h4>
+
+
+        <h2>pfp</h2>
+        <h4>{{php}}</h4>
+
+
+        <h2>City</h2>
+        <h4>{{city}}</h4>
+
+        <h2>State</h2>
+        <h4>{{state}}</h4>
+
+        <h2>Age</h2>
+        <h4>{{age}}</h4>
+
+  
+
+        {{#if planToVisit.length}}
+        <h2>planToVisit</h2>
+        <ul>
+        {{#each planToVisit}}
+            <li>{{this}}</li>
+        {{/each}}
+        </ul>
+        {{/if}}
+
+
+        {{#if reviews.length}}
+        <h2>Your Reviews</h2>
+        <ul>
+        {{#each reviews}}
+            <div class="jumbotron text-center">
+            <li><h3>Hotel Name:</h3><a style="position: absolute;right: 200px; " href="/profile/{{_id}}">Delete</a></li>
+            <li><h4>{{this.hotelName}}</h4></li>
+            <li><h3>Review Content:</h3></li>
+            <li><h4>{{this.reviewText}}</h4></li>
+            <li><h3>Rating:</h3></li>
+            <li><h4>{{this.rating}}</h4></li>
+            <li><h3>Reviewer:{{this.userName}}</h3></li>
+            </div>
+        {{/each}}
+        </ul>
+        {{/if}}
     </main>
     
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="

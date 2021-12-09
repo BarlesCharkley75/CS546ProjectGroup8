@@ -47,8 +47,16 @@ router.post('/:id', async (req, res) => {
     let reviewData = req.body;
     if(req.body.addHotelName){  
         const User = await user.getUser(xss(req.session.user.Username));
+        let p = User.planToVisit;
+        let flag = true;
+        for(let x in p){
+            if(p[x]==req.body.addHotelName){
+                flag = false;
+            }
+        }
+        if(flag ==false) throw "This place has been added to your plan."
         const plan = await user.planVisit(User._id,xss(req.body.addHotelName));
-        res.redirect('/hotels/'+xss(req.params.id));
+        res.redirect('/profile');
     }else{
 
         let reviewContent = reviewData.reviewContent;

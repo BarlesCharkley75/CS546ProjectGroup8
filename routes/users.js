@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const user = data.users;
 const hotel = data.hotels;
+const review = data.reviews;
 const xss = require('xss');
 
 router.get('/home', async (req, res) => {
@@ -99,12 +100,38 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/profile', async (req, res) => {
-  if(xss(req.session.user)){
-    res.render('partials/profile', {title : 'Profile', name : xss(req.session.user.Username)});
+  if(req.session.user){
+    const User = await user.getUser(req.session.user.Username);
+    let reviewIds = User.reviewIds;
+    let rList = [];
+    for(let x in reviewIds){
+      let Review = await review.getReview(reviewIds[x]);
+      let Hotel = await hotel.getHotel(Review.hotelId);
+      Review['hotelName'] = Hotel.name;
+      rList.push(Review);
+    }
+    for(let x in rList){
+      rList[x]._id = rList[x]._id.toString();
+    }
+    
+    res.render('partials/profile', {title : 'Profile', name : req.session.user.Username, email : User.email, php : User.php, city : User.city, state : User.state, age : User.age, planToVisit : User.planToVisit, reviews : rList});
   }else{
     res.render('partials/login', {title : 'Login'});
   }
     
+});
+
+router.get('/profile/:id', async (req, res) => {
+  if(req.session.user){
+  try {
+    await review.removeReview(req.params.id.toString());
+    res.redirect('/profile');
+  } catch (e) {
+    res.sendStatus(500);
+  }
+}else{
+  res.redirect('/login');
+}
 });
 
 router.get('/logout', async (req, res) => {

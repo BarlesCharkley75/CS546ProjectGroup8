@@ -87,9 +87,7 @@ module.exports = {
       if(!ObjectId.isValid(id)) throw "Error: id must be a valid ObjectId";
       const hotelCollection = await hotels();
       let parsedId = ObjectId(id)
-      const hotel = await hotelCollection.findOne({_id: parsedId});
       const deletionInfo = await hotelCollection.deleteOne({ _id: parsedId });
-  
       if (deletionInfo.deletedCount === 0) throw `Could not delete hotel with id of ${id}`;
       return {"hotelId": id, "deleted": true}
     },

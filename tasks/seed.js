@@ -190,20 +190,7 @@ const main = async () => {
   );
   console.log(hotel5);
 
-  let review1 = await reviews.createReview(
-    hotel1._id.toString(),
-    user1._id.toString(),
-    "wow look at this review",
-    5
-  );
-  console.log(review1);
 
-  let comment1 = await comments.createComment(
-    hotel1._id.toString(),
-    user1._id.toString(),
-    "wow look at this comment"
-  );
-  console.log(comment1);
   await db.serverConfig.close();
 };
 

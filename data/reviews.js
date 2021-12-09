@@ -42,6 +42,21 @@ module.exports = {
         let user = await Users.getUser(userName);
         moreReviews = user.reviewIds;
         moreReviews.push(id);
+        const updateUser = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            pfp: user.pfp,
+            city: user.city,
+            state: user.state,
+            age: user.age,
+            planToVisit: user.planToVisit,
+            username: user.username,
+            password: user.password,
+            reviewIds: moreReviews,
+            commentIds: user.commentIds
+        }
+        
         addReviews.push(newReview);
         let sum = 0
         let mean = 0
@@ -64,10 +79,9 @@ module.exports = {
             reviews: addReviews,
             comments: hotel.comments
         }
-        await userCollection.updateOne(
-            { _id: ObjectID(userId) },
-            { $addToSet: { reviewIds: moreReviews }  
-        });
+
+
+        await userCollection.updateOne({ _id: ObjectID(userId)},{$set: updateUser});
         hotId = ObjectId(hotelId)
         const insertReview = await hotelCollection.updateOne({_id: hotId}, {$set: voyage});
         if (insertReview.modifiedCount == 0) throw 'Error: Could not insert new review'
@@ -91,18 +105,9 @@ module.exports = {
         if (!reviewId) throw "Error: reviewId must be valid";
         if (typeof reviewId != "string" || reviewId.trim().length == 0) throw "Error: reviewId must be a string and must not be empty";
         if(!reviewId || !ObjectId.isValid(reviewId)) throw "Error: must provide a valid reviewId to search for"
-        const hotelCollection = await hotels()
-        const hotArray = await hotelCollection.find({}).toArray()
-        let parsedId = ObjectId(reviewId);
-        for(x of hotArray){
-            for(y of x.reviews){
-                if(y._id.toString() == parsedId.toString()) {
-                    y._id = parsedId.toString()
-                    return y
-                }
-            }
-        }
-        throw "Error: No review exists with that reviewId"
+        const reviewCollection = await reviews();
+        const review = await reviewCollection.findOne({_id: ObjectId(reviewId)});
+        return review;
     },
 
     async removeReview(reviewId){
@@ -110,6 +115,8 @@ module.exports = {
         if (typeof reviewId != "string") throw "Error: reviewId must be a string"
         if(!reviewId || !ObjectId.isValid(reviewId)) throw "Error: must provide a valid reviewId to search for"
         const hotelCollection = await hotels();
+        const userCollection = await users();
+        const reviewCollection = await reviews();
         const hotArray = await hotelCollection.find({}).toArray()
         let reviewing = null;
         let reviewList = [];
@@ -146,13 +153,39 @@ module.exports = {
             zip: reviewing.zip,
             amenities: reviewing.amenities,
             nearbyAttractions: reviewing.nearbyAttractions,
-            rating: nuMean,
+            overallRating: nuMean,
             images: reviewing.images,
             reviews: reviewList,
             comments: reviewing.comments
         }
         const removedReview = await hotelCollection.updateOne({ _id: reviewing._id }, { $set: rehotel })
         if (removedReview.modifiedCount == 0) throw 'Error: review was not deleted successfully'
-        return {"reviewId": id, "deleted": true}
+        const Review = await this.getReview(reviewId.toString());
+        const User = await Users.getUser(Review.userName);
+        const Rid = User.reviewIds;
+        for(let i = 0; i < Rid.length; i++) {
+            if(Rid[i] == reviewId.toString()) {
+                Rid.splice(i, 1);
+            }
+        }
+        const updateUser ={
+            firstName: User.firstName,
+            lastName: User.lastName,
+            email: User.email,
+            pfp: User.pfp,
+            city: User.city,
+            state: User.state,
+            age: User.age,
+            planToVisit: User.planToVisit,
+            username: User.username,
+            password: User.password,
+            reviewIds: Rid,
+            commentIds: User.commentIds
+        }
+        await userCollection.updateOne({ _id: ObjectID(User._id)},{$set: updateUser});
+        let parsedId = ObjectId(reviewId)
+        const deletionInfo = await reviewCollection.deleteOne({ _id: parsedId });
+        if (deletionInfo.deletedCount === 0) throw `Could not delete review with id of ${id}`;
+        return {"deleted": true}
     }
 }
