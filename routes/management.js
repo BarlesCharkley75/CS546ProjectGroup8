@@ -3,9 +3,10 @@ const router = express.Router();
 const data = require('../data');
 const user = data.users;
 const hotel = data.hotels;
+const xss = require('xss');
 
 router.get('/', async (req, res) => {
-    if(req.session.user == undefined ||req.session.user.Username !='admin'){
+    if(req.session.user == undefined || req.session.user.Username !='admin'){
         res.status(500).json({error: 'You can not access this page without the permission.'});
     }else{
         const allHotels = await hotel.getAll();
@@ -15,9 +16,8 @@ router.get('/', async (req, res) => {
   });
 router.get('/hotel/:id', async (req, res) => {
     if (!req.params.id) throw 'You must specify an ID to delete';
-    console.log(req.params.id);
     try {
-      await hotel.get(req.params.id);
+      await hotel.get(xss(req.params.id));
     } catch (e) {
       res.status(404).json({ error: 'hotel not found' });
       return;
@@ -31,18 +31,18 @@ router.get('/hotel/:id', async (req, res) => {
     }
 });
 router.get('/addhotel', async (req, res) => {
-    if(req.session.user == undefined ||req.session.user.Username !='admin'){
+    if(req.session.user == undefined || req.session.user.Username !='admin'){
         res.status(500).json({error: 'You can not access this page without the permission.'});
     }else{
         res.render('partials/addhotel', {title : 'Add Hotel'});
     }
 });
 router.get('/updatehotel/:id', async (req, res) => {
-    if(req.session.user == undefined ||req.session.user.Username !='admin'){
+    if(req.session.user == undefined || req.session.user.Username != 'admin'){
         res.status(500).json({error: 'You can not access this page without the permission.'});
     }else{
-        const thisHotel = await hotel.get(req.params.id);
-        res.render('partials/updatehotel', {title : 'Update Hotel', hotelname : thisHotel.name, _id : req.params.id});
+        const thisHotel = await hotel.get(xss(req.params.id));
+        res.render('partials/updatehotel', {title : 'Update Hotel', hotelname : thisHotel.name, _id : xss(req.params.id)});
     }
 });
 
@@ -103,7 +103,7 @@ router.post('/updatehotel/:id', async (req, res) => {
       }else{
         nearbyAttractions = [nearbyAttractions]
       }
-      const newHotel = await hotel.update(req.params.id, name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions);
+      const newHotel = await hotel.update(xss(req.params.id), name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions);
       if(newHotel['updated'] == true){
         res.redirect('/management');
       }else{

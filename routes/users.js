@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const user = data.users;
 const hotel = data.hotels;
+const xss = require('xss');
 
 router.get('/home', async (req, res) => {
   if(req.session.user){
@@ -98,8 +99,8 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/profile', async (req, res) => {
-  if(req.session.user){
-    res.render('partials/profile', {title : 'Profile', name : req.session.user.Username});
+  if(xss(req.session.user)){
+    res.render('partials/profile', {title : 'Profile', name : xss(req.session.user.Username)});
   }else{
     res.render('partials/login', {title : 'Login'});
   }

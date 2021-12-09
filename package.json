@@ -1,7 +1,7 @@
 {
   "name": "final",
   "version": "1.0.0",
-  "description": "my final project module",
+  "description": "Our final project module",
   "main": "seed.js",
   "scripts": {
     "start": "node app.js",
@@ -15,8 +15,8 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.3.4",
     "express-session": "^1.17.2",
-    "express-sessions": "^1.0.6",
     "handlebars": "^4.7.7",
-    "mongodb": "^4.2.1"
+    "mongodb": "^4.2.1",
+    "xss": "^1.0.6"
   }
 }
