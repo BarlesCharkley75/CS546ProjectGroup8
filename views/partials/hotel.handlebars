@@ -1,25 +1,24 @@
-<header>
+<header class="hero-image-short">
     <p class="error"> {{error}}</p>
-    <div class="jumbotron text-center">
+    <div class="hero-text">
         <h1>Hotel Finder</h1>
         <form action="/hotels" method="POST" id="hotelSearchForm">
             <label for="searchTerm">Search by hotel name or location</label>
             <br>
-            <input type="text" id="searchTerm" name="searchTerm" value="{{searchTerm}}">
-            <input type="submit" value="Find your hotel!" />
+            <input type="text" id="searchTerm" name="searchTerm" value="{{searchTerm}}" style="color: black;">
+            <input type="submit" value="Find your hotel!" class="btn btn-primary btn-lg"/>
         </form>
     </div>
 </header>
-
-
-            {{#if hotels.length}}
-            <ul id="hotelsList">
-                {{#each hotels}}
-                <li><a href="/hotels/{{_id}}">{{name}}</a></li>
-                {{/each}}
-            </ul>
-            {{/if}}
-
+<main>
+    {{#if hotels.length}}
+        <ul id="hotelsList">
+            {{#each hotels}}
+            <li><a href="/hotels/{{_id}}">{{name}}</a></li>
+            {{/each}}
+        </ul>
+        {{/if}}
+</main>      
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"

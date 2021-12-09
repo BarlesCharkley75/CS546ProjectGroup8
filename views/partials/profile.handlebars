@@ -1,7 +1,7 @@
  <header>
         <h1>{{title}}</h1>
     </header>
-    <main>
+    <main class="text-center">
         <div>
            <h2>Welcome {{name}}!</h2> 
             <h2>Planned Trips</h2>
@@ -10,13 +10,34 @@
         </div>
         <div >
             <h2>Past Trips</h2>
+            {{#if trips.length}}
+                <ul id="tripsLists">
+                    {{#each trips}}
+                        <li>{{trip}}</li>
+                    {{/each}}
+                </ul>
+            {{/if}}
         </div>
         <div>
             <h2>Comments</h2>
+            {{#if comments.length}}
+                <ul id="commentsList">
+                    {{#each comments}}
+                    <li>{{comment}}</li>
+                    {{/each}}
+                </ul>
+            {{/if}}
         </div>
         <div>
             <h2>Reviews</h2>
             <ul>
+                {{#if reviews.length}}
+                    <ul id="reviewsList">
+                        {{#each reviews}}
+                        <li>{{review}}</li>
+                        {{/each}}
+                    </ul>
+                {{/if}}
                 <li>
                     Review One
                 </li>

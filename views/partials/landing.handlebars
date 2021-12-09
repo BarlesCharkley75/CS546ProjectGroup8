@@ -1,28 +1,29 @@
-<header>
-        <div class="jumbotron text-center">
-            <h1>Hotel Finder</h1>
-            <form action="/hotels" method="POST" id="hotelSearchForm">
-                <label for="searchTerm">Search by hotel name or location</label>
-                <br>
-                <input type="text" id="searchTerm" name="searchTerm">
-                <input type="submit" value="Find your hotel!" />
-            </form>
-        </div>
-    </header>
-    <section>
-        <h2 align="center">What is Hotel Finder?</h2>
-        <p>It's your one stop shop for finding your next hotel!</p>
-    </section>
-    <div>
-            <h1>Hotel List</h1>
-            {{#if hotels.length}}
-            <ul id="hotelsList">
-                {{#each hotels}}
-                <li><a href="/hotels/{{_id}}">{{name}}</a></li>
-                {{/each}}
-            </ul>
-            {{/if}}
-        </div>
+<main class="hero-image">
+    <div class="hero-text">
+        {{!-- <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3548&q=80"/> --}}
+        <h1 class="title" style="font-size: 6rem;">Hotel Finder</h1>
+        <h2 style="font-size: 4rem;">Find your next hotel today!</h2>
+        <form action="hotels">
+            <input type="submit" value="Explore" class="btn btn-primary"/>
+        </form>
+
+        {{!-- <br>
+        <h1>Hotel List</h1>
+        <form action="/hotels" method="POST" id="hotelSearchForm">
+            <label for="searchTerm">Search by hotel name or location</label>
+            <br>
+            <input type="text" id="searchTerm" name="searchTerm">
+            <input type="submit" value="Find your hotel!" style="color: black;"/>
+        </form>
+        {{#if hotels.length}}
+        <ul id="hotelsList">
+            {{#each hotels}}
+            <li><a href="/hotels/{{_id}}">{{name}}</a></li>
+            {{/each}}
+        </ul>
+        {{/if}}
+    </div> --}}
+</main>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
