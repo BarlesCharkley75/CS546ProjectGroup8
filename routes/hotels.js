@@ -19,7 +19,6 @@ router.post('/', async (req, res) => {
     let searchTerm = searchData.searchTerm;
     try{
           const hotels = await hotel.searchHotel(searchTerm);
-          console.log(hotels);
           if(hotels){
             res.render('partials/hotel', {title : 'Hotels', hotels : hotels});
           }else{
@@ -47,19 +46,19 @@ router.post('/', async (req, res) => {
 router.post('/:id', async (req, res) => {
     let reviewData = req.body;
     if(req.body.addHotelName){  
-        const userId = await user.getUser(xss(req.session.user.Username));
-        const plan = await user.planVisit(userId,xss(req.body.addHotelName));
+        const User = await user.getUser(xss(req.session.user.Username));
+        const plan = await user.planVisit(User._id,xss(req.body.addHotelName));
         res.redirect('/hotels/'+xss(req.params.id));
     }else{
 
-        let reviewTitle = reviewData.reviewTitle;
         let reviewContent = reviewData.reviewContent;
         let rating = reviewData.rating;
 
         if(req.session.user){
             try{
                 rating = parseInt(rating);
-                const addReview = await review.create(xss(req.params.id), reviewTitle, xss(req.session.user.Username), rating, reviewContent);
+                const User = await user.getUser(xss(req.session.user.Username));
+                const addReview = await review.createReview(xss(req.params.id), User._id, xss(req.session.user.Username), reviewContent, rating);
                 if(addReview){
                     res.redirect('/hotels/'+xss(req.params.id));
                 }else{

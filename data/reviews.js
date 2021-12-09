@@ -1,5 +1,6 @@
 const mongoCollections = require("../config/mongoCollections");
 const hots = require('./hotels')
+const Users = require('./users')
 const reviews = mongoCollections.reviews;
 const hotels = mongoCollections.hotels;
 const users = mongoCollections.users;
@@ -7,36 +8,41 @@ const ObjectId = require('mongodb').ObjectId
 const { ObjectID } = require('bson');
 
 module.exports = {
-    async createReview(hotelId, userId, reviewText, rating)
-    {
-        if(!hotelId || !userId || !reviewText || !rating) throw "All fields need to have valid values"
+    async createReview(hotelId, userId, userName, reviewText, rating)
+    {   userId = userId.toString();
+        if(!hotelId || !userId || !reviewText || !rating || !userName) throw "All fields need to have valid values"
         if(!ObjectId.isValid(hotelId)) throw "Error: hotelId must be valid"
         if(!ObjectId.isValid(userId)) throw "Error: hotelId must be valid"
         if(typeof reviewText != "string") throw "Error: reviewer must be a string"
+        if(typeof userName != "string") throw "Error: reviewer must be a string"
         if(typeof rating != 'number') throw "Error: rating must be an integer"
         if(rating < 1 || rating > 5) throw "Error: rating must be between 0 and 5"
-        if(hotelId.trim().length == 0 || userId.trim().length == 0 ||reviewText.trim().length == 0) throw "Error: All fields must not be empty strings"
+        if(hotelId.trim().length == 0 || userId.trim().length == 0 ||reviewText.trim().length == 0 || userName.trim().length == 0) throw "Error: All fields must not be empty strings"
         let hotel
         try {
-            hotel = await hots.get(hotelId)
+            hotel = await hots.getHotel(hotelId)
         } catch (e) {
             throw `Error: hotel with id ${hotelId} does not exist`
         }
         const hotelCollection = await hotels();
         const userCollection = await users();
+        const reviewsCollection = await reviews();
         newReview = {
             _id: ObjectID(),
             hotelId: hotelId,
             userId: userId,
+            userName: userName,
             reviewText: reviewText,
             rating: rating
         }
         const reviewCollect = await reviewsCollection.insertOne(newReview)
         if (reviewCollect.insertedCount === 0) throw 'Could not add review';
         const id = reviewCollect.insertedId.toString()
-        addReviews = hotel.reviews
-        moreReviews = user.reviewIds
-        addReviews.push(newReview)
+        addReviews = hotel.reviews;
+        let user = await Users.getUser(userName);
+        moreReviews = user.reviewIds;
+        moreReviews.push(id);
+        addReviews.push(newReview);
         let sum = 0
         let mean = 0
         for(i of addReviews){
@@ -53,19 +59,19 @@ module.exports = {
             zip: hotel.zip,
             amenities: hotel.amenities,
             nearbyAttractions: hotel.nearbyAttractions,
-            rating: mean,
+            overallRating: mean,
             images: hotel.images,
             reviews: addReviews,
             comments: hotel.comments
         }
         await userCollection.updateOne(
             { _id: ObjectID(userId) },
-            { $addToSet: { reviewIds: id }  
+            { $addToSet: { reviewIds: moreReviews }  
         });
         hotId = ObjectId(hotelId)
         const insertReview = await hotelCollection.updateOne({_id: hotId}, {$set: voyage});
         if (insertReview.modifiedCount == 0) throw 'Error: Could not insert new review'
-        const reviewedhotel = this.get(newReview._id.toString())
+        const reviewedhotel = this.getReview(newReview._id.toString())
         return reviewedhotel;
     },
 

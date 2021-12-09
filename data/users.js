@@ -75,7 +75,7 @@ module.exports = {
         if (username.length < 4) throw "Error: username or password is not strong enough"
         const userCollection = await users();
         const user = await userCollection.findOne({username: username});
-        return user._id;
+        return user;
     },
 
     async planVisit(id, location) {
