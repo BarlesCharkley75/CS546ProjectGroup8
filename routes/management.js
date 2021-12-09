@@ -24,7 +24,7 @@ router.get('/hotel/:id', async (req, res) => {
     }
     let pid = req.params.id;
     try {
-      await hotel.remove(req.params.id);
+      await hotel.removeHotel(req.params.id);
       res.redirect('/management')
     } catch (e) {
       res.sendStatus(500);
@@ -69,7 +69,7 @@ router.post('/addhotel', async (req, res) => {
       }else{
         nearbyAttractions = [nearbyAttractions]
       }
-      const newHotel = await hotel.create(name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions, images);
+      const newHotel = await hotel.createHotel(name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions, images);
       if(newHotel['hotelInserted'] == true){
         res.redirect('/management');
       }else{
@@ -103,7 +103,7 @@ router.post('/updatehotel/:id', async (req, res) => {
       }else{
         nearbyAttractions = [nearbyAttractions]
       }
-      const newHotel = await hotel.update(xss(req.params.id), name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions);
+      const newHotel = await hotel.updateHotel(xss(req.params.id), name, phoneNumber, website, address, city, state, zip, amenities, nearbyAttractions);
       if(newHotel['updated'] == true){
         res.redirect('/management');
       }else{
