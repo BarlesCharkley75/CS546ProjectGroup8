@@ -1,9 +1,10 @@
 <article class="post">
+  <br>
   <button id="addHotel">Add this hotel to my Plan</button>
   <div><h1 id="hotelName">{{name}}</h1></div>
 
-  <img src="{{images}}", alt="{{name}}">
-
+  <img class = "resize" src="{{images}}", alt="{{name}}">
+  
 
   <h2>PhoneNumber</h2>
   <h4>{{phoneNumber}}</h4>
@@ -16,7 +17,7 @@
   <h2>Address</h2>
   <h4>{{address}}</h4>
 
-
+  
   <h2>City</h2>
   <h4>{{city}}</h4>
 
@@ -53,11 +54,12 @@
     <ul>
       {{#each reviews}}
         <div class="jumbotron text-center">
-        <li><h3>Review Content:</h3></li>
-        <li><h4>{{this.reviewText}}</h4></li>
+        <li><h3>Title:{{this.title}}</h3></li>
+        <li><h3>Content:</h3></li>
+        <li><h4>{{this.review}}</h4></li>
         <li><h3>Rating:</h3></li>
         <li><h4>{{this.rating}}</h4></li>
-        <li><h3>Reviewer:{{this.userName}}</h3></li>
+        <li><h3>Reviewer:{{this.reviewer}}</h3></li>
         </div>
       {{/each}}
     </ul>
@@ -77,7 +79,11 @@
     <div class="jumbotron text-center">
         <h1>Review This Hotel</h1>
         <form action="/hotels/{{id}}" method="POST" id="reviewForm">
-            <label for="reviewText">Review Content</label>
+            <label for="reviewText">Title</label>
+        
+            <input type="text" id="reviewTitle" name="reviewTitle" value="{{reviewTitle}}">
+             <label for="reviewText">Content</label>
+    
             <input type="text" id="reviewContent" name="reviewContent" value="{{reviewContent}}">
              <label for="reviewText">Rating(0-5)</label>
         
