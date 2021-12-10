@@ -1,15 +1,17 @@
 const dbConnection = require("../config/mongoConnection");
 const data = require("../data/");
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 const registeredUsers = data.users;
 const hotels = data.hotels;
 const reviews = data.reviews;
 const comments = data.comments;
 
-const main = async () => {
+async function main() {
   const db = await dbConnection();
+
   await db.dropDatabase();
+
   const user1 = await registeredUsers.createUser(
     "David",
     "Smith",
@@ -22,7 +24,8 @@ const main = async () => {
     "davsmith001",
     "pass12345"
   );
-  console.log(user1);
+  console.log("User 1 Inserted succesfully!");
+
   let user2 = await registeredUsers.createUser(
     "Mark",
     "Jones",
@@ -35,7 +38,8 @@ const main = async () => {
     "marjon002",
     "pass12345"
   );
-  console.log(user2);
+  console.log("User 2 Inserted succesfully!");
+
   let user3 = await registeredUsers.createUser(
     "Brian",
     "Johnson",
@@ -48,7 +52,7 @@ const main = async () => {
     "brijoh003",
     "pass12345"
   );
-  console.log(user3);
+  console.log("User 3 Inserted succesfully!");
 
   let user4 = await registeredUsers.createUser(
     "Jerry",
@@ -62,7 +66,7 @@ const main = async () => {
     "jseinfe4",
     "pass12345"
   );
-  console.log(user4);
+  console.log("User 4 Inserted succesfully!");
 
   let user5 = await registeredUsers.createUser(
     "George",
@@ -76,7 +80,7 @@ const main = async () => {
     "gcostanz8",
     "pass12345"
   );
-  console.log(user5);
+  console.log("User 5 Inserted succesfully!");
 
   let user6 = await registeredUsers.createUser(
     "Elaine",
@@ -90,7 +94,7 @@ const main = async () => {
     "ebenes36",
     "pass12345"
   );
-  console.log(user6);
+  console.log("User 6 Inserted succesfully!");
 
   let user7 = await registeredUsers.createUser(
     "Cosmo",
@@ -104,7 +108,7 @@ const main = async () => {
     "ckramer77",
     "pass12345"
   );
-  console.log(user7);
+  console.log("User 7 Inserted succesfully!");
 
   let user8 = await registeredUsers.createUser(
     "Wayne",
@@ -118,7 +122,7 @@ const main = async () => {
     "wknight137",
     "pass12345"
   );
-  console.log(user8);
+  console.log("User 8 Inserted succesfully!");
 
   const hotel1 = await hotels.createHotel(
     "Marriot",
@@ -132,7 +136,7 @@ const main = async () => {
     ["Water Park"],
     "../public/images/hotel_one.jpg"
   );
-  console.log(hotel1);
+  console.log("Hotel 1 Inserted succesfully!");
 
   const hotel2 = await hotels.createHotel(
     "Four Seasons",
@@ -146,7 +150,7 @@ const main = async () => {
     ["Pool", "McDonalds"],
     "../public/images/hotel_two.jpg"
   );
-  console.log(hotel2);
+  console.log("Hotel 2 Inserted succesfully!");
 
   const hotel3 = await hotels.createHotel(
     "Elite Lodge",
@@ -160,7 +164,7 @@ const main = async () => {
     ["Water Park", "Hibachi"],
     "../public/images/hotel_three.jpg"
   );
-  console.log(hotel3);
+  console.log("Hotel 3 Inserted succesfully!");
 
   const hotel4 = await hotels.createHotel(
     "Sunset Springs",
@@ -174,7 +178,7 @@ const main = async () => {
     ["Yacht Club"],
     "../public/images/hotel_four.jpg"
   );
-  console.log(hotel4);
+  console.log("Hotel 4 Inserted succesfully!");
 
   const hotel5 = await hotels.createHotel(
     "Big Hotel",
@@ -188,10 +192,9 @@ const main = async () => {
     ["Poker Club"],
     "../public/images/hotel_five.jpg"
   );
-  console.log(hotel5);
-
+  console.log("Hotel 5 Inserted succesfully!");
 
   await db.serverConfig.close();
-};
+}
 
-main().catch(console.log("This is working!"));
+main();
