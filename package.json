@@ -4,7 +4,8 @@
   "description": "Our final project module",
   "main": "seed.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "seed": "node ./tasks/seed.js"
   },
   "author": "Group 8",
   "license": "ISC",
