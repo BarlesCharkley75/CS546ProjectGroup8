@@ -19,6 +19,11 @@ Install the necessary dependencies by using
 npm install
 ```
 
+To fill the website with data run the following command to seed the project
+```
+npm run seed
+```
+
 Run the project with
 ```
 npm start
