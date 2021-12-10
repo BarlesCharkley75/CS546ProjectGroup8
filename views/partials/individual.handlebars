@@ -5,42 +5,42 @@
   <img class = "resize" src="{{images}}", alt="{{name}}">
 
 
-  <h2>PhoneNumber</h2>
-  <h4>{{phoneNumber}}</h4>
+  <h2 class = "indent">PhoneNumber</h2>
+  <h4 class = "small-indent">{{phoneNumber}}</h4>
 
 
-  <h2>Website</h2>
+  <h2 class = "indent">Website</h2>
   <a href="{{website}}">{{website}}</a>
 
 
-  <h2>Address</h2>
-  <h4>{{address}}</h4>
+  <h2 class = "indent">Address</h2>
+  <h4 class = "small-indent">{{address}}</h4>
 
 
-  <h2>City</h2>
-  <h4>{{city}}</h4>
+  <h2 class = "indent">City</h2>
+  <h4 class = "small-indent">{{city}}</h4>
 
-  <h2>State</h2>
-  <h4>{{state}}</h4>
+  <h2 class = "indent">State</h2>
+  <h4 class = "small-indent">{{state}}</h4>
 
-  <h2>Zip</h2>
-  <h4>{{zip}}</h4>
+  <h2 class = "indent">Zip</h2>
+  <h4 class = "small-indent">{{zip}}</h4>
 
   
-  <h2>OverallRating</h2>
-  <h4>{{overallRating}}</h4>
+  <h2 class = "indent">OverallRating</h2>
+  <h4 class = "small-indent">{{overallRating}}</h4>
 
   {{#if amenities.length}}
-    <h2>Amenities</h2>
+    <h2 class = "indent">Amenities</h2>
     <ul>
       {{#each amenities}}
         <li>{{this}}</li>
       {{/each}}
-    </ul>
   {{/if}}
 
+    </ul>
   {{#if nearbyAttractions.length}}
-    <h2>NearbyAttractions</h2>
+    <h2 class = "indent">NearbyAttractions</h2>
     <ul>
       {{#each nearbyAttractions}}
         <li>{{this}}</li>
