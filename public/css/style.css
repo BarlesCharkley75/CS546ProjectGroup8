@@ -65,6 +65,14 @@ p {
   text-align: center;
 }
 
+h2.indent {
+  text-indent: 1%;
+}
+
+h4.small-indent {
+  text-indent: 2%;
+}
+
 .post {
   width: 100%;
   border-bottom: 1px dashed #333;
