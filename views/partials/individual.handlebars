@@ -1,52 +1,54 @@
-<article class="post">
-  <button id="addHotel">Add this hotel to my Plan</button>
+<article class="post text-center">
   <div><h1 id="hotelName">{{name}}</h1></div>
+  <h3 class = "indent">Website: <a href="{{website}}">{{website}}</a></h3>
 
   <img class = "resize" src="{{images}}", alt="{{name}}">
+  <br>
+  <br>
+  <button id="addHotel" class="btn btn-primary btn-lg">Add this hotel to my Plan</button>
 
+  <div class='row'>
+    <div class="col-sm-6">
+      <h2 class = "indent">PhoneNumber</h2>
+      <h4 class = "small-indent">{{phoneNumber}}</h4>
 
-  <h2 class = "indent">PhoneNumber</h2>
-  <h4 class = "small-indent">{{phoneNumber}}</h4>
+      <h2 class = "indent">OverallRating</h2>
+      <h4 class = "small-indent">{{overallRating}}</h4>
+    
+      {{#if amenities.length}}
+        <h2 class = "indent">Amenities</h2>
+        <ul>
+          {{#each amenities}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ul>
+      {{/if}}
 
+      {{#if nearbyAttractions.length}}
+        <h2 class = "indent">NearbyAttractions</h2>
+        <ul>
+          {{#each nearbyAttractions}}
+            <li>{{this}}</li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    </div>
+    <div class="col-sm-6">    
+      <h2 class = "indent">Address</h2>
+      <h4 class = "small-indent">{{address}}</h4>
 
-  <h2 class = "indent">Website</h2>
-  <a href="{{website}}">{{website}}</a>
+      <h2 class = "indent">City</h2>
+      <h4 class = "small-indent">{{city}}</h4>
 
+      <h2 class = "indent">State</h2>
+      <h4 class = "small-indent">{{state}}</h4>
 
-  <h2 class = "indent">Address</h2>
-  <h4 class = "small-indent">{{address}}</h4>
+      <h2 class = "indent">Zip</h2>
+      <h4 class = "small-indent">{{zip}}</h4>
 
-
-  <h2 class = "indent">City</h2>
-  <h4 class = "small-indent">{{city}}</h4>
-
-  <h2 class = "indent">State</h2>
-  <h4 class = "small-indent">{{state}}</h4>
-
-  <h2 class = "indent">Zip</h2>
-  <h4 class = "small-indent">{{zip}}</h4>
-
+    </div>
+  </div>
   
-  <h2 class = "indent">OverallRating</h2>
-  <h4 class = "small-indent">{{overallRating}}</h4>
-
-  {{#if amenities.length}}
-    <h2 class = "indent">Amenities</h2>
-    <ul>
-      {{#each amenities}}
-        <li>{{this}}</li>
-      {{/each}}
-  {{/if}}
-
-    </ul>
-  {{#if nearbyAttractions.length}}
-    <h2 class = "indent">NearbyAttractions</h2>
-    <ul>
-      {{#each nearbyAttractions}}
-        <li>{{this}}</li>
-      {{/each}}
-    </ul>
-  {{/if}}
 
   {{#if reviews.length}}
     <h2>Reviews</h2>
