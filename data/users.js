@@ -77,6 +77,14 @@ module.exports = {
         const user = await userCollection.findOne({username: username});
         return user;
     },
+    async get(id){
+        if (!id) throw "Error: input required"
+        if (typeof id != "string") throw "Error: username must be a valid string"
+        if (id.trim().length == 0) throw "Error: inputs must not be only spaces"
+        const userCollection = await users();
+        const user = await userCollection.findOne({_id: ObjectId(id)});
+        return user;
+    },
 
     async planVisit(id, location) {
         if (!id) throw "You must provide an ID value";

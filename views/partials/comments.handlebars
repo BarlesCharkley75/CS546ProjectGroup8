@@ -1,0 +1,25 @@
+<h1>Comments</h1>
+ <p class="error"> {{error}}</p>
+{{#if comments.length}}
+    <h2>List</h2>
+    <ul id="commentsList">
+      {{#each comments}}
+        <li name="{{this._id}}">{{this.commentText}} <h3>{{this.likes}}</h3><button name="like" >Like it</button>  <h3>{{this.dislikes}}</h3><button name="dislike">Dislike it</button></li>
+      {{/each}}
+    </ul>
+{{/if}}
+  
+
+
+    <div class="jumbotron text-center">
+        <h1>Add Comment</h1>
+        <form action="/comments/{{hotelId}}" method="POST" id="commentForm">
+            <label for="commentText">Comment Content</label>
+            <input type="text" id="commentText" name="commentText" value="{{commentText}}">
+            <input type="submit" value="Add Comment"/>
+        </form>
+    </div>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+<script src="../../public/js/commentScript.js"></script>

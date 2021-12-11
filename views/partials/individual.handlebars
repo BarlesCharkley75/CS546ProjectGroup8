@@ -63,14 +63,7 @@
     </ul>
   {{/if}}
 
-  {{#if comments.length}}
-    <h2>Comments</h2>
-    <ul>
-      {{#each comments}}
-        <li>{{this}}</li>
-      {{/each}}
-    </ul>
-  {{/if}}
+ 
   
 
   <p class="error"> {{error}}</p>
@@ -86,7 +79,7 @@
         </form>
     </div>
 
-  <a href="/hotels">Back to search</a>
+  <a href="/comments/{{id}}">Click here to look some comments</a>
 </article>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
         crossorigin="anonymous"></script>
