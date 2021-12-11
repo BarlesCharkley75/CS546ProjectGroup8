@@ -24,7 +24,7 @@
             var newElement = $(responseMessage);
            /*  console.log(newElement); */
         });
-
+   
        
     });
   

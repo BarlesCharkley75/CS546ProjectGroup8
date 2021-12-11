@@ -106,13 +106,14 @@ module.exports = {
         const addLike = await commentCollection.updateOne({ _id: parsedId },{ $set: likedComment });
 
         let originalComment = hotel.comments
+        let nowComment = [];
         for(let x in originalComment){
-            if (originalComment[x].hotelId == hotel._id.toString()){
-                originalComment.splice(x,1);
+            if (originalComment[x]._id.toString() != thisComment._id.toString()){
+                nowComment.push(originalComment[x]);
             }
         }
         let newComment = await this.getComment(id);
-        originalComment.push(newComment);
+        nowComment.push(newComment);
         const voyage = {
             name: hotel.name,
             phoneNumber: hotel.phoneNumber,
@@ -126,7 +127,7 @@ module.exports = {
             overallRating: hotel.overallRating,
             images: hotel.images,
             reviews: hotel.reviews,
-            comments: originalComment
+            comments: nowComment
         }
         const insertComment = await hotelCollection.updateOne({_id: ObjectId(hotel._id)}, {$set: voyage});
         if (insertComment.modifiedCount == 0) throw 'Error: Could not insert new Comment'
@@ -160,15 +161,20 @@ module.exports = {
         const commentCollection = await comments();
         const hotelCollection = await hotels();
         const addDisLike = await commentCollection.updateOne({ _id: parsedId },{ $set: dislikedComment });
-        
+
         let originalComment = hotel.comments
+        console.log(originalComment);
+        console.log(thisComment);
+        let nowComment = [];
         for(let x in originalComment){
-            if (originalComment[x].hotelId == hotel._id.toString()){
-                originalComment.splice(x,1);
+            if (originalComment[x]._id.toString() != thisComment._id.toString()){
+                nowComment.push(originalComment[x]);
             }
         }
+        console.log(nowComment);
         let newComment = await this.getComment(id);
-        originalComment.push(newComment);
+        nowComment.push(newComment);
+
         const voyage = {
             name: hotel.name,
             phoneNumber: hotel.phoneNumber,
@@ -182,7 +188,7 @@ module.exports = {
             overallRating: hotel.overallRating,
             images: hotel.images,
             reviews: hotel.reviews,
-            comments: originalComment
+            comments: nowComment
         }
         const insertComment = await hotelCollection.updateOne({_id: ObjectId(hotel._id)}, {$set: voyage});
         if (insertComment.modifiedCount == 0) throw 'Error: Could not insert new Comment'
