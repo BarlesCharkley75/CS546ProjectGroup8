@@ -5,6 +5,7 @@
         <div>
            <h2>Welcome {{name}}!</h2> 
         </div>
+
         <h2>Email</h2>
         <h4>{{email}}</h4>
 
@@ -22,10 +23,9 @@
         <h2>Age</h2>
         <h4>{{age}}</h4>
 
-  
-
         {{#if planToVisit.length}}
         <h2>Planning To Visit</h2>
+        
         <ul>
         {{#each planToVisit}}
             <li>{{this}}</li>
