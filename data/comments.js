@@ -163,15 +163,12 @@ module.exports = {
         const addDisLike = await commentCollection.updateOne({ _id: parsedId },{ $set: dislikedComment });
 
         let originalComment = hotel.comments
-        console.log(originalComment);
-        console.log(thisComment);
         let nowComment = [];
         for(let x in originalComment){
             if (originalComment[x]._id.toString() != thisComment._id.toString()){
                 nowComment.push(originalComment[x]);
             }
         }
-        console.log(nowComment);
         let newComment = await this.getComment(id);
         nowComment.push(newComment);
 

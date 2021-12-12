@@ -2,7 +2,7 @@
 
     $('#loginBar').hide();
     $('#registerBar').hide();
-    
+
 	let myH = $('#hotelName'),
         myButton = $('#addHotel');
 
@@ -21,7 +21,7 @@
 
         $.ajax(requestConfig).then(function(responseMessage) {
             var newElement = $(responseMessage);
-            console.log(newElement);
+            /* console.log(newElement); */
         });
        
     });
