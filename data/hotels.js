@@ -99,6 +99,7 @@ module.exports = {
         $or: [
             {'name': {$regex: reg, $options: 'i'}},
             {'address': {$regex: reg, $options: 'i'}},
+            {'city': {$regex: reg, $options: 'i'}},
         ]
     }
       const hotelCollection = await hotels();
