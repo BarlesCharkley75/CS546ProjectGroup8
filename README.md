@@ -30,3 +30,5 @@ npm start
 ```
 
 The project will be hosted on ```localhost:3000``` 
+
+To access the management account, log in with the sign up page with username: admin and password: admin 
