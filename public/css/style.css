@@ -212,3 +212,11 @@ nav {
   font-size: 3rem;
   color: #6c757d;
 }
+
+.hotel-img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  padding: 5px;
+}

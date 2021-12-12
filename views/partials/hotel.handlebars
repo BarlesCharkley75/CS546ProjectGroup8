@@ -15,9 +15,7 @@
         <ul id="hotelsList">
             {{#each hotels}}
             <li class="text-center hotel-item">
-                <img class="resize" src="{{images}}", alt="{{name}}">
-                <br>
-                <a href="/hotels/{{_id}}">{{name}}</a></li>
+                <img class="resize hotel-img" src="{{images}}", alt="{{name}}"><a href="/hotels/{{_id}}">{{name}}</a></li>
             {{/each}}
         </ul>
         {{/if}}
